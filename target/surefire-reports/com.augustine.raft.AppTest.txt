@@ -1,0 +1,17 @@
+-------------------------------------------------------------------------------
+Test set: com.augustine.raft.AppTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.584 sec <<< FAILURE!
+testApp(com.augustine.raft.AppTest)  Time elapsed: 0.21 sec  <<< ERROR!
+java.lang.RuntimeException: java.lang.IllegalArgumentException: Log index 1 does't exist
+	at com.augustine.raft.wal.PersistentLog.executeWithLock(PersistentLog.java:245)
+	at com.augustine.raft.wal.PersistentLog.executeWithReadLock(PersistentLog.java:230)
+	at com.augustine.raft.wal.PersistentLog.getLogEntries(PersistentLog.java:116)
+	at com.augustine.raft.wal.PersistentLog.getLogEntries(PersistentLog.java:140)
+	at com.augustine.raft.AppTest.testApp(AppTest.java:99)
+Caused by: java.lang.IllegalArgumentException: Log index 1 does't exist
+	at com.augustine.raft.wal.PersistentLog.lambda$getLogEntries$1(PersistentLog.java:128)
+	at com.augustine.raft.wal.PersistentLog.lambda$executeWithLock$5(PersistentLog.java:237)
+	at com.augustine.raft.wal.PersistentLog.executeWithLock(PersistentLog.java:243)
+	... 32 more
+
