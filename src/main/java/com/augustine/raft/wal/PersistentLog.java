@@ -74,25 +74,24 @@ public class PersistentLog implements Log, AutoCloseable {
     }
 
     @Override
-    public void appendLogEntries(@NonNull List<LogEntry> entries) {
-        executeWithWriteLock(()->{
-            appendEntriesUnsafe(entries);
-            return true;
-        });
+    public List<Long> appendLogEntries(@NonNull List<LogEntry> entries) {
+        return executeWithWriteLock(()-> appendEntriesUnsafe(entries));
     }
 
-    private void appendEntriesUnsafe(@NonNull List<LogEntry> entries) {
+    private List<Long> appendEntriesUnsafe(@NonNull List<LogEntry> entries) {
+        List<Long> commitedLsns = new ArrayList<>();
         long lastLsn = this.getLastEntryIndexUnsafe();
         try(Txn<ByteBuffer> writeTxn = this.dbEnvironment.txnWrite()){
             for (LogEntry logEntry: entries) {
                 logEntry = logEntry.toBuilder()
                         .lsn(++lastLsn)
                         .build();
-
+                commitedLsns.add(lastLsn);
                 this.logDb.put(writeTxn, toByteBuffer(lastLsn), logEntry.toByteBuffer());
             }
             writeTxn.commit();
         }
+        return commitedLsns;
     }
 
     private long getFirstEntryIndexUnsafe() {

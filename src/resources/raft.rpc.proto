@@ -10,6 +10,7 @@ message LogEntry {
         NORMAL = 0;
         SNAPSHOT = 1;
         CONFIGURATION = 2;
+        NO_OP = 3;
     }
 
     Type type = 3;

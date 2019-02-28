@@ -9,7 +9,7 @@ public interface Log {
 
     long getLastEntryIndex();
 
-    void appendLogEntries(List<LogEntry> entries);
+    List<Long> appendLogEntries(List<LogEntry> entries);
 
     List<LogEntry> getLogEntries(long beginIndex, long endIndexInclusive);
 

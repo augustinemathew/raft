@@ -5,12 +5,7 @@ import com.augustine.raft.proto.RaftRpc;
 import com.google.common.base.Preconditions;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.nio.ByteBuffer;
 
@@ -18,6 +13,7 @@ import java.nio.ByteBuffer;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode(doNotUseGetters = true)
 public class LogEntry {
     private final long lsn;
 
@@ -45,6 +41,15 @@ public class LogEntry {
     }
 
     public static class LogEntryBuilder{
+        private static final byte[] EMPTY = new byte[0];
+        public static LogEntry buildNoopEntry(long term) {
+            return LogEntry.builder()
+                    .type(LogEntryType.NO_OP)
+                    .array(EMPTY)
+                    .term(term)
+                    .build();
+        }
+
         public LogEntryBuilder configuration(@NonNull RaftConfiguration configuration){
             type(LogEntryType.CONFIG);
             array(configuration.toByteArray());

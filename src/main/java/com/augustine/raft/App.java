@@ -22,6 +22,9 @@ import io.grpc.ManagedChannelBuilder;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.*;
@@ -55,7 +58,28 @@ public class App
             throws IOException, InterruptedException, ExecutionException{
         Logger root = (Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
         root.setLevel(Level.INFO);
-       verify();
+        new Thread(App::deadLockDetect).start();
+       foo();
+    }
+
+    private static void deadLockDetect(){
+        while (true) {
+            ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+            long[] threadIds = bean.findDeadlockedThreads(); // Returns null if no threads are deadlocked.
+
+            if (threadIds != null) {
+                ThreadInfo[] infos = bean.getThreadInfo(threadIds);
+
+                for (ThreadInfo info : infos) {
+                    StackTraceElement[] stack = info.getStackTrace();
+                    for(StackTraceElement element : stack) {
+                        // Log or store stack trace information.
+                        System.out.println(" " + element.toString());
+                    }
+                }
+            }
+            Uninterruptibles.sleepUninterruptibly(100, TimeUnit.MILLISECONDS);
+        }
     }
 
     private static void foo() throws IOException, InterruptedException {
@@ -88,13 +112,12 @@ public class App
                     server2.propose(entries);
                 } else if (server3.getServerRole() == ServerRole.Leader) {
                     server3.propose(entries);
-                } else {
-
                 }
-            }catch (Exception e){
+                Uninterruptibles.sleepUninterruptibly(3000, TimeUnit.MILLISECONDS);
+            }catch (Throwable e){
                 System.out.println(e);
             }
-            Uninterruptibles.sleepUninterruptibly(1000, TimeUnit.MILLISECONDS);
+
         }
     }
 

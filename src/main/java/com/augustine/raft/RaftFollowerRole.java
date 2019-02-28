@@ -2,8 +2,8 @@ package com.augustine.raft;
 
 import lombok.NonNull;
 
-public class RaftFollower extends RaftRole {
-    protected RaftFollower(@NonNull RaftServer server) {
+public class RaftFollowerRole extends RaftRole {
+    protected RaftFollowerRole(@NonNull RaftServer server) {
         super(server);
     }
 

@@ -60,10 +60,13 @@ public class GrpcRaftServer extends RaftGrpc.RaftImplBase{
     public void vote(RaftRpc.VoteRequest request,
                      StreamObserver<RaftRpc.VoteResponse> responseObserver){
         this.log.debug("Recvd vote request from server: {}", request.getRequestServerId());
-
-        VoteResponse response = messageHandler.handleVoteRequest(this.messageSerializer.fromProtobuf(request));
-        responseObserver.onNext(this.messageSerializer.toProtobuf(response));
-        responseObserver.onCompleted();
+        try {
+            VoteResponse response = messageHandler.handleVoteRequest(this.messageSerializer.fromProtobuf(request));
+            responseObserver.onNext(this.messageSerializer.toProtobuf(response));
+            responseObserver.onCompleted();
+        }catch (Exception e){
+            log.error("Exception in handling vote request", e);
+        }
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.augustine.raft;
 
 import com.augustine.raft.rpc.VoteRequest;
 import com.augustine.raft.rpc.VoteResponse;
-import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -17,26 +16,27 @@ public class RaftCandidateRole extends RaftRole {
         super(server);
     }
 
-    public synchronized void performElection() {
+    public synchronized void start() {
         info("Attempting to start an election round");
         if(this.server.getServerRole() != ServerRole.Candidate) {
             error("Server is not candidate " + this.server.getServerRole());
             throw new RuntimeException("Not candidate invalid state");
         }
 
-        this.cancelOngoingElection();
+        this.stop();
         this.getRaftState().setVotedForAndCurrentTerm(this.getServerId(), this.getRaftState().getCurrentTerm() + 1);
         this.electionRound = this.server.getScheduledExecutorService().schedule(this::electionLogic,0, TimeUnit.MILLISECONDS);
     }
 
-    public synchronized void cancelOngoingElection() {
+    public synchronized void stop() {
         if(this.electionRound != null){
             info("Cancelling ongoing election ");
             try {
+                this.electionRound.cancel(true);
                 this.electionRound.get();
                 info("Cancelled ongoing election success!");
             }catch (InterruptedException|CancellationException ie) {
-
+                info("Cancelled or interrupted election");
             }catch (ExecutionException ee){
                 warn("Previous execution returned with error",ee);
             }catch (Exception ee){
@@ -53,17 +53,24 @@ public class RaftCandidateRole extends RaftRole {
             VoteRequest request = getVoteRequest();
             VoteCounter voteCounter = new VoteCounter(request.getTerm(), this.server.getMajority());
             for (RaftPeer peer : this.getRaftConfiguration().getPeerList()) {
-                if(peer.getId() == this.getServerId())
-                    continue;
                 final String peerId = peer.toString();
-                CompletableFuture<VoteResponse> response = server.getClient(peer.getId())
-                        .RequestToVote(request)
-                        .exceptionally((exception) -> {
-                            error("Exception while talking to peer {}", exception, peerId);
-                            return null;
-                        });
-                responses.add(response);
-                voteCounter.registerForCompletion(peer, response);
+                if(peer.getId() == this.getServerId()) {
+                    voteCounter.registerForCompletion(peer, CompletableFuture.completedFuture(VoteResponse.builder()
+                            .term(request.getTerm())
+                            .voteGranted(true)
+                            .build()));
+                    continue;
+                }else {
+
+                    CompletableFuture<VoteResponse> response = server.getClient(peer.getId())
+                            .RequestToVote(request)
+                            .exceptionally((exception) -> {
+                                error("Exception while talking to peer {}", exception, peerId);
+                                return null;
+                            });
+                    responses.add(response);
+                    voteCounter.registerForCompletion(peer, response);
+                }
              }
 
             Duration timeToWait = Duration.ofMillis(this.getRaftConfiguration().getMinElectionTimeoutInMs());

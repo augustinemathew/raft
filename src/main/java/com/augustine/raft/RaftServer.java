@@ -15,6 +15,8 @@ import com.augustine.raft.wal.Log;
 import com.augustine.raft.wal.LogEntry;
 import com.augustine.raft.wal.LogEntryType;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.util.concurrent.Uninterruptibles;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -46,13 +48,12 @@ public class RaftServer implements RaftMessageHandler {
 
     private final Logger log;
 
-    private ScheduledFuture electionTimeoutTask;
-
     private volatile ServerRole serverRole;
 
     private final AtomicBoolean stopStateMachineApplicationThread;
 
     private final ConcurrentHashMap<Long,RaftRpcClient> rpcClients = new ConcurrentHashMap<>();
+    private final Map<ServerRole, RaftRole> serverRoleRaftRoleMap;
 
     private volatile long currentLeaderId;
 
@@ -60,12 +61,10 @@ public class RaftServer implements RaftMessageHandler {
 
     private volatile boolean isRunning;
     private SnapshotManager snapshotManager;
-    private volatile Instant lastAppendEntriesOrVoteGranted;
+    private volatile Instant lastAppendEntriesOrVoteGrantedOrMajorityResponse;
 
-
-    private final RaftLeaderRole leaderState;
-    private final RaftCandidateRole candidateState;
-
+    private final Thread timerThread;
+    private final AtomicBoolean stopTimerThread;
     public RaftServer(ServerConfiguration serverConfig,
                       StateMachine stateMachine) {
         this.log = LoggerFactory.getLogger(this.getClass().getName());
@@ -81,10 +80,16 @@ public class RaftServer implements RaftMessageHandler {
                 .getPeerList().get((int)this.serverId).getPort(), this, new ProtoSerializerImpl());
         this.stateMachineThread = new Thread(createStateMachineApplicationTask());
         this.stateMachineThread.setDaemon(true);
-        this.lastAppendEntriesOrVoteGranted = Instant.MIN;
+        this.stateMachineThread.setName("StateMachine-Server-"+ this.serverId);
+        this.timerThread = new Thread(this::timerThreadLogic);
+        this.timerThread.setDaemon(true);
+        this.timerThread.setName("Timer-Server-"+ this.serverId);
+        this.stopTimerThread = new AtomicBoolean(true);
+        this.lastAppendEntriesOrVoteGrantedOrMajorityResponse = Instant.MIN;
         this.currentLeaderId = -1;
-        this.leaderState = new RaftLeaderRole(this);
-        this.candidateState = new RaftCandidateRole(this);
+        this.serverRoleRaftRoleMap = ImmutableMap.of(ServerRole.Leader, new RaftLeaderRole(this),
+                                                     ServerRole.Candidate, new RaftCandidateRole(this),
+                                                     ServerRole.Follower, new RaftFollowerRole(this));
     }
 
     private Log getWriteAheadLog() {
@@ -113,16 +118,43 @@ public class RaftServer implements RaftMessageHandler {
         };
     }
 
-    public synchronized void start() throws IOException{
+    public synchronized void start() throws IOException, InterruptedException{
         if(!this.isRunning) {
-            startStateMachineThread();
+            this.startStateMachineThread();
             this.server.start();
-            this.convertToFollower();
+            this.requestStateTransition(ServerRole.Follower);
             this.isRunning = true;
+            this.startTimerThread();
         }
     }
 
-    private synchronized void startStateMachineThread(){
+    public synchronized void stop(long maxWaitInMs) throws InterruptedException {
+        if(this.isRunning) {
+            this.server.stop(maxWaitInMs, TimeUnit.MILLISECONDS);
+            this.stopTimerThread();
+            this.stopStateMachineThread();
+            for (RaftRole role : this.serverRoleRaftRoleMap.values()) {
+                role.stop();
+            }
+        }
+    }
+
+    private synchronized void startTimerThread(){
+        if(this.timerThread != null && this.timerThread.isAlive()){
+            return;
+        }
+        this.stopTimerThread.set(false);
+        this.timerThread.start();
+    }
+
+    private synchronized void stopTimerThread() throws InterruptedException{
+        this.stopTimerThread.set(false);
+        if(this.timerThread != null && this.timerThread.isAlive()){
+            this.stateMachineThread.join();
+        }
+    }
+
+    private synchronized void startStateMachineThread() throws InterruptedException{
         if(this.stateMachineThread.isAlive()) {
             stopStateMachineThread();
         }
@@ -130,38 +162,31 @@ public class RaftServer implements RaftMessageHandler {
         this.stateMachineThread.start();
     }
 
-    private synchronized void stopStateMachineThread(){
+    private synchronized void stopStateMachineThread() throws InterruptedException{
         if(this.stateMachineThread.isAlive()){
             this.stopStateMachineApplicationThread.set(true);
-            try {
-                this.stateMachineThread.join();
-            }catch (InterruptedException ie){
-                throw new RuntimeException(ie);
-            }
+            this.stateMachineThread.join();
         }
     }
 
-    synchronized void convertToFollower(){
-        //We can get called this from two states
-        //We are either a candidate or a leader
-        //In this function we need to kill extraneous stuff.
-        if(this.serverRole == ServerRole.Candidate){
-            this.candidateState.cancelOngoingElection();
-        }else if(this.serverRole == ServerRole.Leader){
-            this.leaderState.stop();
+    synchronized void requestStateTransition(@NonNull ServerRole targetState){
+        log.info("Stopping current role {}", this.serverRole);
+        this.serverRoleRaftRoleMap.get(this.serverRole).stop();
+        this.serverRole = targetState;
+        log.info("Starting new role {}", this.serverRole);
+        if(targetState == ServerRole.Leader) {
+            this.currentLeaderId = this.serverId;
         }
-        this.serverRole = ServerRole.Follower;
-        resetElectionTimer();
+        this.serverRoleRaftRoleMap.get(targetState).start();;
     }
 
-    public ServerRole getServerRole() {
+    public synchronized ServerRole getServerRole() {
         return serverRole;
     }
 
     public synchronized void proposeConfigurationChange(RaftConfiguration raftConfiguration){
-        if(this.serverRole != ServerRole.Leader){
-            throw new IllegalArgumentException("Not leader");
-        }
+        throwIfNotRunning();
+        throwInvalidRoleForOperation(ServerRole.Leader);
 
         Optional<LogEntry> lastUncommittedConfigEntry = this.getWriteAheadLog()
                 .getLogEntries(this.serverState.getLastCommitedIndex()).stream()
@@ -178,9 +203,8 @@ public class RaftServer implements RaftMessageHandler {
     }
 
     public synchronized void propose(@NonNull List<byte[]> proposals){
-        if(this.serverRole != ServerRole.Leader){
-            throw new IllegalArgumentException("Not leader");
-        }
+        throwIfNotRunning();
+        throwInvalidRoleForOperation(ServerRole.Leader);
 
         this.log.info("{} proposed {} entries for term = {}",this, proposals.size(),
                 this.serverState.getCurrentTerm());
@@ -189,20 +213,6 @@ public class RaftServer implements RaftMessageHandler {
                 .type(LogEntryType.NORMAL)
                 .term(this.serverState.getCurrentTerm()).array(p).build())
                 .collect(Collectors.toList()));
-    }
-
-    synchronized void convertToCandidate(){
-        if(this.serverRole == ServerRole.Leader){
-            this.log.info("{} Converting to candidate. Cancelling heartbeat task.", this.toString());
-            this.leaderState.stop();
-        }else if(this.serverRole == ServerRole.Candidate){
-            this.log.error("{} We are trying to be a candidate while in the candidate state.", this.toString());
-            throw new RuntimeException("Should not occur");
-        }
-
-        this.serverRole = ServerRole.Candidate;
-        resetElectionTimer();
-        this.candidateState.performElection();
     }
 
 
@@ -219,69 +229,58 @@ public class RaftServer implements RaftMessageHandler {
     }
 
     public void tryConvertToLeader() {
-        this.scheduledExecutorService.schedule(this::convertToLeader,0, TimeUnit.MILLISECONDS);
+        this.scheduledExecutorService.schedule(()-> this.requestStateTransition(ServerRole.Leader),0, TimeUnit.MILLISECONDS);
     }
 
-    private synchronized void convertToLeader(){
-        if(this.serverRole != ServerRole.Candidate){
-            throw new RuntimeException("Invalid state should not occur");
+    public synchronized void recordMajorityHeartbeat(){
+        this.lastAppendEntriesOrVoteGrantedOrMajorityResponse = Instant.now();
+    }
+
+    private void timerThreadLogic() {
+        log.info("{} Starting timer logic", this);
+        while(!this.stopTimerThread.get()){
+            try {
+                this.timeoutLogic();
+            }catch (Exception e){
+                this.log.error("{} Exception in timer thread logic {}",this, e);
+            }
+            Uninterruptibles.sleepUninterruptibly(this.getRaftConfiguration().getRandomizedElectionTimeout(), TimeUnit.MILLISECONDS);
         }
-
-        cancelElectionTimer();
-        this.candidateState.cancelOngoingElection();
-        this.serverRole = ServerRole.Leader;
-        this.getWriteAheadLog().appendLogEntries(Arrays.asList(
-                LogEntry.builder().term(this.serverState.getCurrentTerm())
-                                .type(LogEntryType.NORMAL)
-                                .array(new byte[0])
-                                .build()));
-
-        this.leaderState.start();
-        this.currentLeaderId = this.serverId;
+        log.info("{} Exiting timer logic", this);
     }
 
-    private synchronized void electionTimeoutExpired(){
+    private synchronized void timeoutLogic(){
         log.info("{} Election timer fired {}", this, this.serverRole.toString());
-        if(this.serverRole == ServerRole.Follower){
+        try {
+            if (this.serverRole == ServerRole.Follower) {
             /*
              Rules for followers:
                 If election timeout elapses without receiving AppendEntries
                 RPC from current leader or granting vote to candidate:
                 convert to candidate.
             */
-            Duration elaspedRpcTime = Duration.between(lastAppendEntriesOrVoteGranted, Instant.now());
-            if(//Check if we revd append entries
-                (elaspedRpcTime.compareTo(Duration.ofMillis(this.getRaftConfiguration().getMinElectionTimeoutInMs())) <=0)) {
-                resetElectionTimer();
-                return;
+                Duration elaspedRpcTime = Duration.between(lastAppendEntriesOrVoteGrantedOrMajorityResponse, Instant.now());
+                if (//Check if we revd append entries
+                        (elaspedRpcTime.compareTo(Duration.ofMillis(this.getRaftConfiguration().getMinElectionTimeoutInMs())) <= 0)) {
+                    return;
+                }
+                this.log.info("{} Election timer expired converting to candidate elapsed time {}", this, elaspedRpcTime);
+                this.requestStateTransition(ServerRole.Candidate);
+            } else if (this.serverRole == ServerRole.Candidate) {
+                //If we are candidate. Lets restart the election again
+                this.requestStateTransition(ServerRole.Candidate);
+            } else if (this.serverRole == ServerRole.Leader) {
+                Duration lastMajorityHeartbeat = Duration.between(lastAppendEntriesOrVoteGrantedOrMajorityResponse, Instant.now());
+                if (//Check if we revd majority heartbeat
+                        (lastMajorityHeartbeat.compareTo(Duration.ofMillis(this.getRaftConfiguration()
+                                .getMinElectionTimeoutInMs())) <= 0)) {
+                    return;
+                }
+                this.log.info("{} Stepping down from being a leader as we could not hear from a majority", this);
+                this.requestStateTransition(ServerRole.Candidate);
             }
-            this.log.info("{} Election timer expired converting to candidate elapsed time {}", this, elaspedRpcTime);
-            this.convertToCandidate();
-        }else if(this.serverRole == ServerRole.Candidate){
-            this.candidateState.performElection();
-            resetElectionTimer();
-        }else if(this.serverRole == ServerRole.Leader){
-            this.log.warn("{} should occur as election timeout should only be triggered on candidate or follower");
-        }
-    }
-
-    private synchronized void resetElectionTimer(){
-        cancelElectionTimer();
-        final long electionTimeoutInMs = this.getRaftConfiguration().getRandomizedElectionTimeout();
-        this.log.info("{} Setting election timeout to {} ms", this, electionTimeoutInMs);
-        this.electionTimeoutTask = this.scheduledExecutorService.schedule(this::electionTimeoutExpired,
-                                                                                     electionTimeoutInMs,TimeUnit.MILLISECONDS);
-    }
-
-    private synchronized void cancelElectionTimer(){
-        if(this.electionTimeoutTask != null) {
-            this.electionTimeoutTask.cancel(true);
-            try {
-                this.electionTimeoutTask.get();
-            }catch (InterruptedException|CancellationException|ExecutionException e){
-                //this.log.error(this + " election timer cancellation ", e);
-            }
-            this.electionTimeoutTask = null;
+        }catch (Exception e) {
+            this.log.info("{} Exception in timeout handler ", this, e);
         }
     }
 
@@ -297,7 +296,7 @@ public class RaftServer implements RaftMessageHandler {
         long oldTerm = this.serverState.getCurrentTerm();
         if(updateTerm(term)){
             this.log.info("{} Converting to follower due to term mismatch new term {} {}", this, oldTerm, term);
-            this.convertToFollower();
+            this.requestStateTransition(ServerRole.Follower);
             return true;
         }else{
             return false;
@@ -316,52 +315,53 @@ public class RaftServer implements RaftMessageHandler {
 
     @Override
     public synchronized AppendEntriesResponse handleAppendEntries(AppendEntriesRequest request) {
-        this.lastAppendEntriesOrVoteGranted = Instant.now();
+        try {
+            this.lastAppendEntriesOrVoteGrantedOrMajorityResponse = Instant.now();
 
-        if(this.updateTermIfWeAreBehindAndConvertToFollower(request.getTerm())){
-           this.log.info("Append entries term is > our term ");
-        }
+            if (this.updateTermIfWeAreBehindAndConvertToFollower(request.getTerm())) {
+                this.log.info("Append entries term is > our term ");
+            }
 
-        if(this.currentLeaderId != request.getLeaderId()) {
-            this.currentLeaderId = request.getLeaderId();
-        }
+            if (this.currentLeaderId != request.getLeaderId()) {
+                this.currentLeaderId = request.getLeaderId();
+            }
 
 
-        this.log.info("{} Current log status lastIndex {} lastTerm {} request prev Index {} prev Term {} entry count {}",this,
-                this.getWriteAheadLog().getLastEntryIndex(), this.getWriteAheadLog()
-                        .getLogEntry(this.getWriteAheadLog().getLastEntryIndex()).getTerm(),
-                request.getPrevLogIndex(), request.getPrevLogTerm(), request.getEntries().length);
-        AppendEntriesResponse.AppendEntriesResponseBuilder responseBuilder = AppendEntriesResponse.builder();
-        responseBuilder.term(this.serverState.getCurrentTerm());
-        if(request.getTerm() < this.serverState.getCurrentTerm()) {
-            responseBuilder.succeeded(false);
-            responseBuilder.lastLogIndexOnServer(this.getWriteAheadLog().getLastEntryIndex());
-            return responseBuilder.build();
-        }
-
-        boolean logContainsEntryAtPrevIndex = this.getWriteAheadLog().getLastEntryIndex() >= request.getPrevLogIndex();
-        if(!logContainsEntryAtPrevIndex){
-            responseBuilder.succeeded(false);
-            responseBuilder.lastLogIndexOnServer(this.getWriteAheadLog().getLastEntryIndex());
-            return responseBuilder.build();
-        }
-
-        boolean termsMatchForLogEntryAtPrevIndex = this.getWriteAheadLog().getLogEntry(request.getPrevLogIndex()).getTerm()
-                                                    == request.getPrevLogTerm();
-        if(!termsMatchForLogEntryAtPrevIndex){
+            this.log.info("{} Current log status lastIndex {} lastTerm {} request prev Index {} prev Term {} entry count {}", this,
+                    this.getWriteAheadLog().getLastEntryIndex(), this.getWriteAheadLog()
+                            .getLogEntry(this.getWriteAheadLog().getLastEntryIndex()).getTerm(),
+                    request.getPrevLogIndex(), request.getPrevLogTerm(), request.getEntries().length);
+            AppendEntriesResponse.AppendEntriesResponseBuilder responseBuilder = AppendEntriesResponse.builder();
             responseBuilder.term(this.serverState.getCurrentTerm());
-            responseBuilder.succeeded(false);
-            long conflictingTerm = this.getWriteAheadLog().getLogEntry(request.getPrevLogIndex()).getTerm();
-            long firstEntryForConflictingTerm = getFirstIndexOfTermInLog(conflictingTerm);
-            responseBuilder.conflictDetails(AppendEntriesResponse.ConflictDetails.builder()
-                                            .conflictingTerm(conflictingTerm)
-                                            .logIndexOfFirstEntryInConflictingTerm(firstEntryForConflictingTerm)
-                                            .build());
-            return responseBuilder.build();
-        }else{
-            responseBuilder.term(this.serverState.getCurrentTerm());
-            responseBuilder.succeeded(true);
-        }
+            if (request.getTerm() < this.serverState.getCurrentTerm()) {
+                responseBuilder.succeeded(false);
+                responseBuilder.lastLogIndexOnServer(this.getWriteAheadLog().getLastEntryIndex());
+                return responseBuilder.build();
+            }
+
+            boolean logContainsEntryAtPrevIndex = this.getWriteAheadLog().getLastEntryIndex() >= request.getPrevLogIndex();
+            if (!logContainsEntryAtPrevIndex) {
+                responseBuilder.succeeded(false);
+                responseBuilder.lastLogIndexOnServer(this.getWriteAheadLog().getLastEntryIndex());
+                return responseBuilder.build();
+            }
+
+            boolean termsMatchForLogEntryAtPrevIndex = this.getWriteAheadLog().getLogEntry(request.getPrevLogIndex()).getTerm()
+                    == request.getPrevLogTerm();
+            if (!termsMatchForLogEntryAtPrevIndex) {
+                responseBuilder.term(this.serverState.getCurrentTerm());
+                responseBuilder.succeeded(false);
+                long conflictingTerm = this.getWriteAheadLog().getLogEntry(request.getPrevLogIndex()).getTerm();
+                long firstEntryForConflictingTerm = getFirstIndexOfTermInLog(conflictingTerm);
+                responseBuilder.conflictDetails(AppendEntriesResponse.ConflictDetails.builder()
+                        .conflictingTerm(conflictingTerm)
+                        .logIndexOfFirstEntryInConflictingTerm(firstEntryForConflictingTerm)
+                        .build());
+                return responseBuilder.build();
+            } else {
+                responseBuilder.term(this.serverState.getCurrentTerm());
+                responseBuilder.succeeded(true);
+            }
 
         /*
          If an existing entry conflicts with a new one (same index
@@ -369,34 +369,39 @@ public class RaftServer implements RaftMessageHandler {
          follow it (§5.3)
          Append any entries that raftlog doesn't contain
         */
-        long nextLogIndex = request.getPrevLogIndex()+1;
-        int entriesToSkip = 0;
+            long nextLogIndex = request.getPrevLogIndex() + 1;
+            int entriesToSkip = 0;
 
-        //Check for conflict or look for entries that match to skip
-        boolean didnotConflict = true;
-        for (;entriesToSkip<request.getEntries().length && nextLogIndex <= this.getWriteAheadLog().getLastEntryIndex() &&
-                (didnotConflict = this.getWriteAheadLog().getLogEntry(nextLogIndex).getTerm() ==
-                        request.getEntries()[entriesToSkip].getTerm());
-                entriesToSkip++,nextLogIndex++);
-        //If a conflict is found remove all entries proceeding it including that entry
-        if(nextLogIndex<= this.getWriteAheadLog().getLastEntryIndex() && !didnotConflict){
-            this.log.warn("{} found conflicting entries at {}", this, nextLogIndex);
-            this.getWriteAheadLog().removeEntriesStartingFromIndex(nextLogIndex);
-        }
-
-        //Append the remaining entries to the end of the raftlog if any
-        if(entriesToSkip<request.getEntries().length){
-            if(entriesToSkip + request.getPrevLogIndex() != this.getWriteAheadLog().getLastEntryIndex()){
-                this.log.error("{} CRAY CRAY Corruption", this);
+            //Check for conflict or look for entries that match to skip
+            boolean didnotConflict = true;
+            for (; entriesToSkip < request.getEntries().length && nextLogIndex <= this.getWriteAheadLog().getLastEntryIndex() &&
+                    (didnotConflict = this.getWriteAheadLog().getLogEntry(nextLogIndex).getTerm() ==
+                            request.getEntries()[entriesToSkip].getTerm());
+                 entriesToSkip++, nextLogIndex++)
+                ;
+            //If a conflict is found remove all entries proceeding it including that entry
+            if (nextLogIndex <= this.getWriteAheadLog().getLastEntryIndex() && !didnotConflict) {
+                this.log.warn("{} found conflicting entries at {}", this, nextLogIndex);
+                this.getWriteAheadLog().removeEntriesStartingFromIndex(nextLogIndex);
             }
-            this.log.info("Appending entries starting from {} upto including {}",entriesToSkip, request.getEntries().length-1);
-            this.getWriteAheadLog().appendLogEntries(Arrays.asList(request.getEntries()).subList(entriesToSkip, request.getEntries().length));
+
+            //Append the remaining entries to the end of the raftlog if any
+            if (entriesToSkip < request.getEntries().length) {
+                if (entriesToSkip + request.getPrevLogIndex() != this.getWriteAheadLog().getLastEntryIndex()) {
+                    this.log.error("{} CRAY CRAY Corruption", this);
+                }
+                this.log.info("Appending entries starting from {} upto including {}", entriesToSkip, request.getEntries().length - 1);
+                this.getWriteAheadLog().appendLogEntries(Arrays.asList(request.getEntries()).subList(entriesToSkip, request.getEntries().length));
+            }
+
+            setLastCommitIndex(request.getLeaderCommit());
+
+            responseBuilder.lastLogIndexOnServer(this.getWriteAheadLog().getLastEntryIndex());
+            return responseBuilder.build();
+        }catch (Exception e){
+            log.error("Error in append entries ", e);
+            throw e;
         }
-
-        setLastCommitIndex(request.getLeaderCommit());
-
-        responseBuilder.lastLogIndexOnServer(this.getWriteAheadLog().getLastEntryIndex());
-        return responseBuilder.build();
     }
 
     private long getFirstIndexOfTermInLog(long term) {
@@ -441,7 +446,7 @@ public class RaftServer implements RaftMessageHandler {
         if(canVoteForCandidate && ourLogIsAtleastAsUpdateAsCandidate) {
             this.log.info("{} Granting vote for {}", this, request.getCandidateId());
             this.serverState.setVotedFor(serverId);
-            this.lastAppendEntriesOrVoteGranted = Instant.now();
+            this.lastAppendEntriesOrVoteGrantedOrMajorityResponse = Instant.now();
             responseBuilder.voteGranted(true);
         }else{
             this.log.info("{} Rejecting vote for {} CanVote: {} logIsGood: {}", this, request.getCandidateId(), canVoteForCandidate, ourLogIsAtleastAsUpdateAsCandidate);
@@ -453,33 +458,32 @@ public class RaftServer implements RaftMessageHandler {
     @Override
     public InstallSnapshotResponse handleInstallSnapshot(InstallSnapshotRequest request) {
 
-        InstallSnapshotResponse.InstallSnapshotResponseBuilder builder = InstallSnapshotResponse.builder();
-        builder.term(this.serverState.getCurrentTerm());
-        if(updateTermIfWeAreBehindAndConvertToFollower(request.getTerm())){
-            return builder.ok(false)
-                    .build();
-        }
-
-        resetElectionTimer();
-
-        try {
-            if(!request.isDone()) {
-                this.snapshotManager.appendToSnapshot(request.getLastIncludedIndex(), request.getLastIncludedTerm(), request.getOffset(),
-                        request.getData());
-                return builder.ok(true).build();
-            }else{
-
-                Snapshot snapshot = this.snapshotManager.saveSnapshot(
-                        request.getLastIncludedIndex(),
-                        request.getLastIncludedTerm(),
-                        request.getConfiguration(),
-                        request.getSnaphotCheckum());
-                return builder.ok(true).build();
-            }
-        }catch (IOException ioe){
-            this.log.error("{} error in storing snapshot", this,ioe);
-            return builder.ok(false).build();
-        }
+//        InstallSnapshotResponse.InstallSnapshotResponseBuilder builder = InstallSnapshotResponse.builder();
+//        builder.term(this.serverState.getCurrentTerm());
+//        if(updateTermIfWeAreBehindAndConvertToFollower(request.getTerm())){
+//            return builder.ok(false)
+//                    .build();
+//        }
+//
+//        try {
+//            if(!request.isDone()) {
+//                this.snapshotManager.appendToSnapshot(request.getLastIncludedIndex(), request.getLastIncludedTerm(), request.getOffset(),
+//                        request.getData());
+//                return builder.ok(true).build();
+//            }else{
+//
+//                Snapshot snapshot = this.snapshotManager.saveSnapshot(
+//                        request.getLastIncludedIndex(),
+//                        request.getLastIncludedTerm(),
+//                        request.getConfiguration(),
+//                        request.getSnaphotCheckum());
+//                return builder.ok(true).build();
+//            }
+//        }catch (IOException ioe){
+//            this.log.error("{} error in storing snapshot", this,ioe);
+//            return builder.ok(false).build();
+//        }
+        return null;
     }
 
     synchronized long setLastCommitIndex(long lastCommitIndex){
@@ -516,5 +520,17 @@ public class RaftServer implements RaftMessageHandler {
 
     public String toString(){
         return "ID " + this.serverId;
+    }
+
+    private synchronized void throwIfNotRunning(){
+        if(!this.isRunning) {
+            throw new IllegalStateException("This instance is not running. Call start() first");
+        }
+    }
+
+    private synchronized void throwInvalidRoleForOperation(ServerRole expectedRole){
+        if(this.serverRole != expectedRole) {
+            throw new IllegalStateException("Expected to be in state " + expectedRole + " + but was in" + serverRole);
+        }
     }
 }

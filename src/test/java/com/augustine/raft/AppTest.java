@@ -71,8 +71,8 @@ public class AppTest
                     .build();
 
         ServerConfiguration.initializeServer("/tmp/raft/server1", 0, configuration);
-        ServerConfiguration.initializeServer("/tmp/raft/server2", 1, configuration);
-        ServerConfiguration.initializeServer("/tmp/raft/server3", 2, configuration);
+//        ServerConfiguration.initializeServer("/tmp/raft/server2", 1, configuration);
+//        ServerConfiguration.initializeServer("/tmp/raft/server3", 2, configuration);
     }
 
     public void testApp() {
@@ -114,7 +114,7 @@ public class AppTest
             plog.getLogEntry(0);
             plog.removeEntriesStartingFromIndex(0);
             Assert.assertEquals(0, plog.getFirstEntryIndex());
-            Assert.assertEquals(0, plog.getLastEntryIndex());
+            Assert.assertEquals(   0, plog.getLastEntryIndex());
             Assert.assertTrue(plog.getLogEntry(0).getTerm() == 0);
         }
     }

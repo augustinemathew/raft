@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 final class VoteCounter {
-    private final int majorityRequired;
+    private final int requiredVotes;
     private int numCompleted;
     private int numGranted;
     private int numRefused;
@@ -25,8 +26,8 @@ final class VoteCounter {
     private final long currentTerm;
     private Optional<Long> expectedTermForCandidate = Optional.empty();
 
-    public VoteCounter(long currentTerm, int majorityRequired) {
-        this.majorityRequired = majorityRequired;
+    public VoteCounter(long currentTerm, int requiredVotes) {
+        this.requiredVotes = requiredVotes;
         this.currentTerm = currentTerm;
     }
 
@@ -35,7 +36,7 @@ final class VoteCounter {
     }
 
     public synchronized boolean wonElection() {
-        return numGranted >= majorityRequired;
+        return numGranted >= requiredVotes;
     }
 
     public synchronized String getElectionResults() {
@@ -49,7 +50,7 @@ final class VoteCounter {
                 .filter(e -> !e.getValue().isPresent() || !e.getValue().get())
                 .map(e -> e.getKey().getId())
                 .collect(Collectors.toList()).toString();
-        return status + " " + ayes + " " + nays;
+        return status + " " + ayes + " " + nays + " required votes = " + this.requiredVotes;
     }
 
     public boolean waitForElectionToComplete(@NonNull Duration timeToWait) throws InterruptedException {
@@ -68,7 +69,11 @@ final class VoteCounter {
         voteResponse.whenComplete((r, e )-> {
             synchronized (this){
                 if(e != null) {
-                    log.error("An exception occurred while waiting for response from peer {}", peer.getId(), e);
+                    if(!(e instanceof CancellationException)) {
+                        log.error("An exception occurred while waiting for response from peer {} {}", peer.getId(), e);
+                    }else{
+                        log.warn("Election was cancelled. Skipping vote counting");
+                    }
                     voteStatus.put(peer, Optional.empty());
                     return;
                 }
@@ -80,6 +85,12 @@ final class VoteCounter {
                 numCompleted++;
                 voteStatus.put(peer, Optional.of(r.isVoteGranted()));
                 if(r.isVoteGranted()) {
+                    if(r.getTerm() != currentTerm) {
+                        log.error("Implementation bug! candidate granted vote for the wrong term expected {} {}",
+                                currentTerm,
+                                r.getTerm());
+                        return;
+                    }
                     numGranted++;
                 }else {
                     numRefused++;
@@ -90,7 +101,7 @@ final class VoteCounter {
                         electionEnded.countDown();
                     }
                 }
-                if(numCompleted >= majorityRequired) {
+                if(numGranted >= requiredVotes || numRefused>= requiredVotes) {
                     electionEnded.countDown();
                 }
             }

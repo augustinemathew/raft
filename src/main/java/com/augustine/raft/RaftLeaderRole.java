@@ -3,6 +3,7 @@ package com.augustine.raft;
 import com.augustine.raft.rpc.AppendEntriesRequest;
 import com.augustine.raft.rpc.AppendEntriesResponse;
 import com.augustine.raft.wal.LogEntry;
+import com.augustine.raft.wal.LogEntryType;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.util.concurrent.Uninterruptibles;
 import lombok.AccessLevel;
@@ -29,6 +30,11 @@ public class RaftLeaderRole extends RaftRole {
     @Getter(AccessLevel.PACKAGE)
     private volatile long[] matchIndex;
     private volatile ScheduledFuture leaderHeartbeatTask;
+    //This is the commit index for the first entry (NOOP) entry in this term.
+    //Only after the current commit index has advanced to this point can we
+    //can we safely commit entries.
+    @Getter(AccessLevel.PACKAGE)
+    private volatile long expectedCommitIndexForCurrentTerm;
 
     public RaftLeaderRole(@NonNull RaftServer server) {
         super(server);
@@ -45,6 +51,11 @@ public class RaftLeaderRole extends RaftRole {
         }
         this.cancelLeaderHeartbeat.set(false);
         this.initializeNextAndMatchIndices();
+        Long firstEntryForTerm = this.getWriteAheadLog().appendLogEntries(
+                Arrays.asList(LogEntry.LogEntryBuilder.buildNoopEntry(this.getRaftState().getCurrentTerm())))
+                .get(0);
+        this.expectedCommitIndexForCurrentTerm = firstEntryForTerm;
+        info("LSN {} value for first commit index in this term", this.expectedCommitIndexForCurrentTerm);
         this.leaderHeartbeatTask = this.server.getScheduledExecutorService()
                 .schedule(this::leaderHeartbeatTask,0, TimeUnit.MILLISECONDS);
         info("Started leader heartbeat task");
@@ -99,7 +110,7 @@ public class RaftLeaderRole extends RaftRole {
                 }
 
                 waitUntilResponsesRecvd(peerToResponseMap);
-
+                int numResponsesRecvd = 1;//Count self
                 for (RaftPeer peer : peerToResponseMap.keySet().stream().filter(l -> peerToResponseMap.get(l).isDone())
                         .collect(Collectors.toList())) {
                     AppendEntriesResponse response = peerToResponseMap.get(peer).get();
@@ -109,6 +120,10 @@ public class RaftLeaderRole extends RaftRole {
                         }
                         updateMatchIndexForPeer(peer, peerToRequestMap.get(peer), response);
                     }
+                    numResponsesRecvd++;
+                }
+                if(numResponsesRecvd >= this.server.getMajority()) {
+                    this.server.recordMajorityHeartbeat();
                 }
                 CompletableFutures.cancelAll(peerToResponseMap.values(), true);
                 this.server.setLastCommitIndex(computeCommitIndex());
@@ -160,8 +175,8 @@ public class RaftLeaderRole extends RaftRole {
         request.term(this.server.getServerState().getCurrentTerm());
         info("append request for peer {} {}",  peerId, request);
         if(nextIndex<=this.getWriteAheadLog().getLastEntryIndex()) {
-            List<LogEntry> entries = this.getWriteAheadLog().getLogEntries(nextIndex, Math.min(this.getWriteAheadLog().getLastEntryIndex(),
-                    nextIndex + 10000));
+            List<LogEntry> entries = this.getWriteAheadLog().getLogEntries(nextIndex,
+                    Math.min(this.getWriteAheadLog().getLastEntryIndex(), nextIndex + 10000));
             request.entries(entries.toArray(new LogEntry[entries.size()]));
         } else {
             request.entries(new LogEntry[]{});
@@ -173,7 +188,11 @@ public class RaftLeaderRole extends RaftRole {
     synchronized long computeCommitIndex() {
         long[] sortedMatch = Arrays.stream(matchIndex).sorted().toArray();
         long newCommitIndex = Math.max(sortedMatch[server.getMajority()], server.getLastCommitIndex());
-        return newCommitIndex;
+        if(this.expectedCommitIndexForCurrentTerm < newCommitIndex) {
+            return 0;
+        }else {
+            return newCommitIndex;
+        }
     }
 
     @VisibleForTesting

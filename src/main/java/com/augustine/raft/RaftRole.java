@@ -16,6 +16,9 @@ public abstract class RaftRole {
         return this.getRaftState().getLastKnownGoodConfiguration();
     }
 
+    protected abstract void start();
+
+    protected abstract void stop();
 
     protected RaftState getRaftState() {
         return this.server.getServerState();
