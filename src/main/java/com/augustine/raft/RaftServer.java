@@ -9,11 +9,12 @@ import com.augustine.raft.rpc.RaftRpcClient;
 import com.augustine.raft.rpc.VoteRequest;
 import com.augustine.raft.rpc.VoteResponse;
 import com.augustine.raft.rpc.impl.GrpcRaftServer;
-import com.augustine.raft.snapshot.Snapshot;
 import com.augustine.raft.snapshot.SnapshotManager;
 import com.augustine.raft.wal.Log;
 import com.augustine.raft.wal.LogEntry;
 import com.augustine.raft.wal.LogEntryType;
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.util.concurrent.Uninterruptibles;
@@ -62,11 +63,20 @@ public class RaftServer implements RaftMessageHandler {
     private volatile boolean isRunning;
     private SnapshotManager snapshotManager;
     private volatile Instant lastAppendEntriesOrVoteGrantedOrMajorityResponse;
+    @Getter
+    private final RaftMessageHandler currentMessageHandler;
 
     private final Thread timerThread;
     private final AtomicBoolean stopTimerThread;
-    public RaftServer(ServerConfiguration serverConfig,
-                      StateMachine stateMachine) {
+
+    public RaftServer(@NonNull ServerConfiguration serverConfig,
+                      @NonNull StateMachine stateMachine){
+        this(serverConfig, stateMachine, Functions.identity());
+    }
+
+    public RaftServer(@NonNull ServerConfiguration serverConfig,
+                      @NonNull StateMachine stateMachine,
+                      @NonNull Function<RaftMessageHandler, RaftMessageHandler> handlerTransformer) {
         this.log = LoggerFactory.getLogger(this.getClass().getName());
         this.serverConfig = serverConfig;
         this.serverState = serverConfig.getRaftState();
@@ -76,8 +86,11 @@ public class RaftServer implements RaftMessageHandler {
         this.serverRole = ServerRole.Follower;
         this.stopStateMachineApplicationThread = new AtomicBoolean(false);
         this.scheduledExecutorService = new ScheduledThreadPoolExecutor(10);
-        this.server = new GrpcRaftServer(this.getRaftConfiguration()
-                .getPeerList().get((int)this.serverId).getPort(), this, new ProtoSerializerImpl());
+        this.server = new GrpcRaftServer(
+                this.getRaftConfiguration().getPeerList()
+                        .get((int)this.serverId).getPort(),
+                this.currentMessageHandler = handlerTransformer.apply(this),
+                new ProtoSerializerImpl());
         this.stateMachineThread = new Thread(createStateMachineApplicationTask());
         this.stateMachineThread.setDaemon(true);
         this.stateMachineThread.setName("StateMachine-Server-"+ this.serverId);

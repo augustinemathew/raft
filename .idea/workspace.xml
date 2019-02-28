@@ -2,89 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7ad9891b-31e0-4c34-a3e7-1d136f5f4598" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftFollowerRole.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/augustine/raft/LogEntrySerializationTests.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/augustine/raft/VoteCounterTests.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_3_8_1.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/App$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/App$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/App$2.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/App$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/App.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/App.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/CompletableFutures.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/CompletableFutures.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/RaftCandidateRole.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/RaftCandidateRole.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/RaftLeaderRole.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/RaftLeaderRole.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/RaftRole.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/RaftRole.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/RaftServer.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/RaftServer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/ServerConfiguration.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/ServerConfiguration.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/VoteCounter.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/VoteCounter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$2.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesConflictInfo$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesConflictInfo$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesConflictInfo$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesConflictInfo$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesConflictInfo.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesConflictInfo.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesRequest$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesRequest$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesRequest$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesRequest$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesRequest.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesRequest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesResponse$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesResponse$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesResponse$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesResponse$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesResponse.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$AppendEntriesResponse.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotRequest$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotRequest$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotRequest$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotRequest$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotRequest.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotRequest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotResponse$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotResponse$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotResponse$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotResponse$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotResponse.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$InstallSnapshotResponse.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry$PayloadCase.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry$PayloadCase.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry$Type$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry$Type$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry$Type.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry$Type.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$LogEntry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$PersistentState$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$PersistentState$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$PersistentState$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$PersistentState$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$PersistentState.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$PersistentState.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration$RaftPeer$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration$RaftPeer$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration$RaftPeer$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration$RaftPeer$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration$RaftPeer.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration$RaftPeer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$RaftConfiguration.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$SnapshotHeader$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$SnapshotHeader$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$SnapshotHeader$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$SnapshotHeader$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$SnapshotHeader.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$SnapshotHeader.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteRequest$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteRequest$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteRequest$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteRequest$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteRequest.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteRequest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteResponse$1.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteResponse$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteResponse$Builder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteResponse$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteResponse.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc$VoteResponse.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/proto/RaftRpc.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/rpc/impl/GrpcRaftServer.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/rpc/impl/GrpcRaftServer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/wal/Log.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/wal/Log.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/wal/LogEntry$LogEntryBuilder.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/wal/LogEntry$LogEntryBuilder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/wal/LogEntry.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/wal/LogEntry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/wal/LogEntryType.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/wal/LogEntryType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/augustine/raft/wal/PersistentLog.class" afterPath="$PROJECT_DIR$/target/classes/com/augustine/raft/wal/PersistentLog.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/augustine/raft/AppTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/augustine/raft/AppTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/augustine/raft/RaftServerInvariantsTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/augustine/raft/RaftServerInvariantsTest.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/DelegatingRaftMessageHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/NetworkPartitioningMessageHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/raft.iml" afterPath="$PROJECT_DIR$/raft.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/CompletableFutures.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/CompletableFutures.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftCandidateRole.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftCandidateRole.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftLeaderRole.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftLeaderRole.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftRole.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftRole.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/VoteCounter.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/VoteCounter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/Log.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/Log.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/LogEntry.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/LogEntry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/LogEntryType.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/LogEntryType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/PersistentLog.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/PersistentLog.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources/raft.rpc.proto" afterPath="$PROJECT_DIR$/src/resources/raft.rpc.proto" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/augustine/raft/AppTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/augustine/raft/AppTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerInvariantsTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerInvariantsTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/generated-sources/protobuf/java/com/augustine/raft/proto/RaftRpc.java" afterPath="$PROJECT_DIR$/target/generated-sources/protobuf/java/com/augustine/raft/proto/RaftRpc.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -100,115 +24,114 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RaftServer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RaftServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="526" column="96" lean-forward="false" selection-start-line="526" selection-start-column="96" selection-end-line="526" selection-end-column="96" />
+            <state relative-caret-position="206">
+              <caret line="195" column="35" lean-forward="false" selection-start-line="195" selection-start-column="35" selection-end-line="195" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7273#7274#0" expanded="true" />
-                <element signature="e#7306#7307#0" expanded="true" />
+                <element signature="e#7807#7808#0" expanded="true" />
+                <element signature="e#7840#7841#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RaftRole.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftRole.java">
+      <file leaf-file-name="GrpcRaftClient.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="20" column="28" lean-forward="false" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RaftCandidateRole.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftCandidateRole.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="30" column="29" lean-forward="false" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
+            <state relative-caret-position="75">
+              <caret line="24" column="46" lean-forward="true" selection-start-line="24" selection-start-column="46" selection-end-line="24" selection-end-column="46" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#3009#3010#0" expanded="true" />
+                <element signature="e#3062#3063#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RaftFollowerRole.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftFollowerRole.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding>
-                <element signature="e#161#162#0" expanded="true" />
-                <element signature="e#190#191#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="59" column="32" lean-forward="false" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
+            <state relative-caret-position="301">
+              <caret line="140" column="68" lean-forward="true" selection-start-line="140" selection-start-column="68" selection-end-line="140" selection-end-column="68" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LogEntrySerializationTests.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/LogEntrySerializationTests.java">
+      <file leaf-file-name="Scanner.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/Scanner.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="49" column="9" lean-forward="true" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
+            <state relative-caret-position="315">
+              <caret line="1532" column="18" lean-forward="false" selection-start-line="1532" selection-start-column="18" selection-end-line="1532" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CompletableFutures.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/CompletableFutures.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RaftLeaderRole.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftLeaderRole.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-189">
-              <caret line="198" column="22" lean-forward="false" selection-start-line="198" selection-start-column="22" selection-end-line="198" selection-end-column="22" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VoteCounter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/VoteCounter.java">
+      <file leaf-file-name="RaftRpcClient.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/RaftRpcClient.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
-              <caret line="74" column="76" lean-forward="false" selection-start-line="74" selection-start-column="76" selection-end-line="74" selection-end-column="76" />
+              <caret line="18" column="1" lean-forward="true" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VoteCounterTests.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/VoteCounterTests.java">
+      <file leaf-file-name="GrpcRaftServer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="161" column="55" lean-forward="true" selection-start-line="161" selection-start-column="55" selection-end-line="161" selection-end-column="55" />
+            <state relative-caret-position="180">
+              <caret line="29" column="61" lean-forward="true" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RaftMessageHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DelegatingRaftMessageHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/DelegatingRaftMessageHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NetworkPartitioningMessageHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/NetworkPartitioningMessageHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#641#642#0" expanded="true" />
+                <element signature="e#700#701#0" expanded="true" />
+                <element signature="e#738#739#0" expanded="true" />
+                <element signature="e#780#781#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AppendEntriesRequest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/AppendEntriesRequest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="18" column="31" lean-forward="false" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -225,7 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>RaftState</find>
       <find>RaftStateSerializer</find>
       <find>handleApp</find>
       <find>vote</find>
@@ -255,6 +177,7 @@
       <find>stop</find>
       <find>propose</find>
       <find>fired</find>
+      <find>proposeConfi</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -273,9 +196,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/RaftRpcClient.java" />
-        <option value="$PROJECT_DIR$/target/generated-sources/protobuf/grpc-java/com/augustine/raft/proto/RaftGrpc.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/InstallSnapshotRequest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/InstallSnapshotResponse.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/snapshot/SnapshotManager.java" />
@@ -310,8 +230,6 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/target/generated-sources/protobuf/java/com/augustine/raft/proto/RaftRpc.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/LogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/LogEntrySerializationTests.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/AppTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerInvariantsTest.java" />
@@ -323,7 +241,12 @@
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftFollower.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftFollowerRole.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftLeaderRole.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/DelegatingRaftMessageHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/NetworkPartitioningMessageHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java" />
       </list>
     </option>
   </component>
@@ -419,6 +342,25 @@
               <item name="raft" type="b2602c69:ProjectViewProjectNode" />
               <item name="raft" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="raft" type="462c0819:PsiDirectoryNode" />
+              <item name="rpc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="raft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="raft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="raft" type="462c0819:PsiDirectoryNode" />
+              <item name="rpc" type="462c0819:PsiDirectoryNode" />
+              <item name="impl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="raft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="raft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -458,7 +400,10 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/kms" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="SearchEverywhereHistoryKey" value="VoteC&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/VoteCounter.java&#10;RaftCan&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftCandidateRole.java&#10;Grpc&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java&#10;RaftLea&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftLeaderRole.java&#10;Vote&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/VoteCounter.java&#10;RaftC&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftCandidateRole.java&#10;test2&#9;PSI&#9;JAVA://com.augustine.raft.AppTest#test2&#10;RaftSer&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftServer.java&#10;RaftCon&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftConfiguration.java&#10;RaftState&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftState.java&#10;Raft&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftConfiguration.java&#10;Persis&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/wal/PersistentLog.java&#10;R&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftServer.java&#10;handleVo&#9;PSI&#9;JAVA://com.augustine.raft.RaftMessageHandler#handleVoteRequest&#10;verify&#9;FILE&#9;jar:///home/avmathew/.m2/repository/com/google/guava/guava/19.0/guava-19.0.jar!/com/google/common/base/VerifyException.class" />
+    <property name="SearchEverywhereHistoryKey" value="Raft&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/rpc/RaftRpcClient.java&#10;RaftMes&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftMessageHandler.java&#10;VoteC&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/VoteCounter.java&#10;RaftCan&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftCandidateRole.java&#10;Grpc&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java&#10;RaftLea&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftLeaderRole.java&#10;Vote&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/VoteCounter.java&#10;RaftC&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftCandidateRole.java&#10;test2&#9;PSI&#9;JAVA://com.augustine.raft.AppTest#test2&#10;RaftSer&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftServer.java&#10;RaftCon&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftConfiguration.java&#10;RaftState&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftState.java&#10;Persis&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/wal/PersistentLog.java&#10;R&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftServer.java&#10;handleVo&#9;PSI&#9;JAVA://com.augustine.raft.RaftMessageHandler#handleVoteRequest&#10;verify&#9;FILE&#9;jar:///home/avmathew/.m2/repository/com/google/guava/guava/19.0/guava-19.0.jar!/com/google/common/base/VerifyException.class" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
@@ -781,7 +726,7 @@
       <workItem from="1550272448127" duration="703000" />
       <workItem from="1550529606819" duration="5719000" />
       <workItem from="1551303572755" duration="2317000" />
-      <workItem from="1551321823517" duration="16623000" />
+      <workItem from="1551321823517" duration="20798000" />
     </task>
     <servers />
   </component>
@@ -818,11 +763,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="290793000" />
+    <option name="totallyTimeSpent" value="294968000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1613" height="1025" extended-state="6" />
-    <editor active="true" />
+    <frame x="67" y="25" width="1613" height="1025" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -836,9 +780,9 @@
       <window_info id="Coding Counter" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4612868" sideWeight="0.6946108" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4612868" sideWeight="0.6946108" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23009814" sideWeight="0.43370402" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23009814" sideWeight="0.43370402" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -889,7 +833,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java</url>
-          <line>147</line>
+          <line>173</line>
           <properties />
           <option name="timeStamp" value="230" />
         </line-breakpoint>
@@ -907,21 +851,9 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java</url>
-          <line>62</line>
+          <line>64</line>
           <properties />
           <option name="timeStamp" value="372" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java</url>
-          <line>117</line>
-          <properties />
-          <option name="timeStamp" value="376" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java</url>
-          <line>73</line>
-          <properties />
-          <option name="timeStamp" value="377" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/com/augustine/raft/SnapshotManagerTests.java</url>
@@ -932,7 +864,7 @@
           <option name="timeStamp" value="210" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="378" />
+      <option name="time" value="387" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -942,64 +874,11 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/ListenableFutureAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="19" column="66" lean-forward="false" selection-start-line="19" selection-start-column="66" selection-end-line="19" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftStateMachineApplicator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="12" column="41" lean-forward="false" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#401#402#0" expanded="false" />
-            <element signature="e#449#450#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/SnapshotManagerTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="25" column="2" lean-forward="false" selection-start-line="25" selection-start-column="2" selection-end-line="25" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/LICENSE">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="30" lean-forward="true" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1125">
-          <caret line="87" column="69" lean-forward="false" selection-start-line="87" selection-start-column="7" selection-end-line="87" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="37" column="78" lean-forward="false" selection-start-line="37" selection-start-column="78" selection-end-line="37" selection-end-column="78" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="71" column="26" lean-forward="false" selection-start-line="71" selection-start-column="26" selection-end-line="71" selection-end-column="26" />
-          <folding>
-            <element signature="e#3009#3010#0" expanded="false" />
-            <element signature="e#3062#3063#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1055,484 +934,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="224" column="32" lean-forward="true" selection-start-line="224" selection-start-column="32" selection-end-line="224" selection-end-column="32" />
-          <folding>
-            <element signature="e#6803#6804#0" expanded="false" />
-            <element signature="e#6844#6845#0" expanded="false" />
-            <element signature="e#7210#7211#0" expanded="false" />
-            <element signature="e#7251#7252#0" expanded="false" />
-            <element signature="e#7480#7481#0" expanded="false" />
-            <element signature="e#7543#7544#0" expanded="false" />
-            <element signature="e#7663#7664#0" expanded="false" />
-            <element signature="e#7730#7731#0" expanded="false" />
-            <element signature="e#7831#7832#0" expanded="false" />
-            <element signature="e#7871#7872#0" expanded="false" />
-            <element signature="e#7972#7973#0" expanded="false" />
-            <element signature="e#8076#8077#0" expanded="false" />
-            <element signature="e#8599#8600#0" expanded="false" />
-            <element signature="e#8635#8636#0" expanded="false" />
-            <element signature="e#9030#9031#0" expanded="false" />
-            <element signature="e#9066#9067#0" expanded="false" />
-            <element signature="e#9225#9226#0" expanded="false" />
-            <element signature="e#9266#9267#0" expanded="false" />
-            <element signature="e#9544#9545#0" expanded="false" />
-            <element signature="e#9579#9580#0" expanded="false" />
-            <element signature="e#9852#9853#0" expanded="false" />
-            <element signature="e#9877#9878#0" expanded="false" />
-            <element signature="e#10033#10034#0" expanded="false" />
-            <element signature="e#10059#10060#0" expanded="false" />
-            <element signature="e#10256#10257#0" expanded="false" />
-            <element signature="e#10282#10283#0" expanded="false" />
-            <element signature="e#11198#11199#0" expanded="false" />
-            <element signature="e#11236#11237#0" expanded="false" />
-            <element signature="e#19646#19647#0" expanded="false" />
-            <element signature="e#19695#19696#0" expanded="false" />
-            <element signature="e#21305#21306#0" expanded="false" />
-            <element signature="e#21356#21357#0" expanded="false" />
-            <element signature="e#23257#23258#0" expanded="false" />
-            <element signature="e#23305#23306#0" expanded="false" />
-            <element signature="e#25489#25490#0" expanded="false" />
-            <element signature="e#25518#25519#0" expanded="false" />
-            <element signature="e#26692#26693#0" expanded="false" />
-            <element signature="e#26721#26722#0" expanded="false" />
-            <element signature="e#27186#27187#0" expanded="false" />
-            <element signature="e#27216#27217#0" expanded="false" />
-            <element signature="e#27731#27732#0" expanded="false" />
-            <element signature="e#27761#27762#0" expanded="false" />
-            <element signature="e#30197#30198#0" expanded="false" />
-            <element signature="e#30239#30240#0" expanded="false" />
-            <element signature="e#36200#36201#0" expanded="false" />
-            <element signature="e#36237#36238#0" expanded="false" />
-            <element signature="e#36319#36677#0" expanded="false" />
-            <element signature="e#36676#36677#0" expanded="false" />
-            <element signature="e#36744#36745#0" expanded="false" />
-            <element signature="e#36771#36772#0" expanded="false" />
-            <element signature="e#36865#36866#0" expanded="false" />
-            <element signature="e#36892#36893#0" expanded="false" />
-            <element signature="e#36976#36977#0" expanded="false" />
-            <element signature="e#37013#37014#0" expanded="false" />
-            <element signature="e#39101#39102#0" expanded="false" />
-            <element signature="e#39129#39130#0" expanded="false" />
-            <element signature="e#39426#39427#0" expanded="false" />
-            <element signature="e#39465#39466#0" expanded="false" />
-            <element signature="e#43428#43429#0" expanded="false" />
-            <element signature="e#43460#43461#0" expanded="false" />
-            <element signature="e#43670#43671#0" expanded="false" />
-            <element signature="e#43713#43714#0" expanded="false" />
-            <element signature="e#46261#46262#0" expanded="false" />
-            <element signature="e#46295#46296#0" expanded="false" />
-            <element signature="e#47538#47539#0" expanded="false" />
-            <element signature="e#47568#47569#0" expanded="false" />
-            <element signature="e#54285#54286#0" expanded="false" />
-            <element signature="e#54338#54339#0" expanded="false" />
-            <element signature="e#56174#56175#0" expanded="false" />
-            <element signature="e#56229#56230#0" expanded="false" />
-            <element signature="e#57980#57981#0" expanded="false" />
-            <element signature="e#58032#58033#0" expanded="false" />
-            <element signature="e#60086#60087#0" expanded="false" />
-            <element signature="e#60119#60120#0" expanded="false" />
-            <element signature="e#61043#61044#0" expanded="false" />
-            <element signature="e#61081#61082#0" expanded="false" />
-            <element signature="e#63585#63586#0" expanded="false" />
-            <element signature="e#63619#63620#0" expanded="false" />
-            <element signature="e#65061#65433#0" expanded="false" />
-            <element signature="e#65432#65433#0" expanded="false" />
-            <element signature="e#65502#65503#0" expanded="false" />
-            <element signature="e#65533#65534#0" expanded="false" />
-            <element signature="e#65631#65632#0" expanded="false" />
-            <element signature="e#65662#65663#0" expanded="false" />
-            <element signature="e#66080#66081#0" expanded="false" />
-            <element signature="e#66127#66128#0" expanded="false" />
-            <element signature="e#66345#66346#0" expanded="false" />
-            <element signature="e#66387#66388#0" expanded="false" />
-            <element signature="e#66605#66606#0" expanded="false" />
-            <element signature="e#66647#66648#0" expanded="false" />
-            <element signature="e#67013#67014#0" expanded="false" />
-            <element signature="e#67040#67041#0" expanded="false" />
-            <element signature="e#67294#67295#0" expanded="false" />
-            <element signature="e#67321#67322#0" expanded="false" />
-            <element signature="e#67467#67468#0" expanded="false" />
-            <element signature="e#67501#67502#0" expanded="false" />
-            <element signature="e#67707#67708#0" expanded="false" />
-            <element signature="e#67745#67746#0" expanded="false" />
-            <element signature="e#75030#75031#0" expanded="false" />
-            <element signature="e#75079#75080#0" expanded="false" />
-            <element signature="e#76770#76771#0" expanded="false" />
-            <element signature="e#76821#76822#0" expanded="false" />
-            <element signature="e#79248#79249#0" expanded="false" />
-            <element signature="e#79296#79297#0" expanded="false" />
-            <element signature="e#82234#82235#0" expanded="false" />
-            <element signature="e#82263#82264#0" expanded="false" />
-            <element signature="e#83204#83205#0" expanded="false" />
-            <element signature="e#83255#83256#0" expanded="false" />
-            <element signature="e#83896#83897#0" expanded="false" />
-            <element signature="e#83942#83943#0" expanded="false" />
-            <element signature="e#84553#84554#0" expanded="false" />
-            <element signature="e#84599#84600#0" expanded="false" />
-            <element signature="e#93600#93601#0" expanded="false" />
-            <element signature="e#93664#93665#0" expanded="false" />
-            <element signature="e#95375#95376#0" expanded="false" />
-            <element signature="e#95412#95413#0" expanded="false" />
-            <element signature="e#95503#95888#0" expanded="false" />
-            <element signature="e#95887#95888#0" expanded="false" />
-            <element signature="e#95964#95965#0" expanded="false" />
-            <element signature="e#95991#95992#0" expanded="false" />
-            <element signature="e#96094#96095#0" expanded="false" />
-            <element signature="e#96121#96122#0" expanded="false" />
-            <element signature="e#96214#96215#0" expanded="false" />
-            <element signature="e#96251#96252#0" expanded="false" />
-            <element signature="e#97887#97888#0" expanded="false" />
-            <element signature="e#97915#97916#0" expanded="false" />
-            <element signature="e#98197#98198#0" expanded="false" />
-            <element signature="e#98236#98237#0" expanded="false" />
-            <element signature="e#101313#101314#0" expanded="false" />
-            <element signature="e#101352#101353#0" expanded="false" />
-            <element signature="e#101556#101557#0" expanded="false" />
-            <element signature="e#101594#101595#0" expanded="false" />
-            <element signature="e#101893#101894#0" expanded="false" />
-            <element signature="e#101940#101941#0" expanded="false" />
-            <element signature="e#102747#102748#0" expanded="false" />
-            <element signature="e#102775#102776#0" expanded="false" />
-            <element signature="e#102960#102961#0" expanded="false" />
-            <element signature="e#102992#102993#0" expanded="false" />
-            <element signature="e#110508#110509#0" expanded="false" />
-            <element signature="e#110557#110558#0" expanded="false" />
-            <element signature="e#112221#112222#0" expanded="false" />
-            <element signature="e#112272#112273#0" expanded="false" />
-            <element signature="e#114415#114416#0" expanded="false" />
-            <element signature="e#114463#114464#0" expanded="false" />
-            <element signature="e#116667#116668#0" expanded="false" />
-            <element signature="e#116696#116697#0" expanded="false" />
-            <element signature="e#117579#117580#0" expanded="false" />
-            <element signature="e#117622#117623#0" expanded="false" />
-            <element signature="e#118207#118208#0" expanded="false" />
-            <element signature="e#118249#118250#0" expanded="false" />
-            <element signature="e#119194#119195#0" expanded="false" />
-            <element signature="e#119282#119283#0" expanded="false" />
-            <element signature="e#123865#123866#0" expanded="false" />
-            <element signature="e#123897#123898#0" expanded="false" />
-            <element signature="e#124524#124525#0" expanded="false" />
-            <element signature="e#124560#124561#0" expanded="false" />
-            <element signature="e#125789#125790#0" expanded="false" />
-            <element signature="e#125826#125827#0" expanded="false" />
-            <element signature="e#125914#126290#0" expanded="false" />
-            <element signature="e#126289#126290#0" expanded="false" />
-            <element signature="e#126363#126364#0" expanded="false" />
-            <element signature="e#126390#126391#0" expanded="false" />
-            <element signature="e#126490#126491#0" expanded="false" />
-            <element signature="e#126517#126518#0" expanded="false" />
-            <element signature="e#126607#126608#0" expanded="false" />
-            <element signature="e#126644#126645#0" expanded="false" />
-            <element signature="e#128278#128279#0" expanded="false" />
-            <element signature="e#128306#128307#0" expanded="false" />
-            <element signature="e#128549#128550#0" expanded="false" />
-            <element signature="e#128588#128589#0" expanded="false" />
-            <element signature="e#131636#131637#0" expanded="false" />
-            <element signature="e#131662#131663#0" expanded="false" />
-            <element signature="e#131834#131835#0" expanded="false" />
-            <element signature="e#131864#131865#0" expanded="false" />
-            <element signature="e#132068#132069#0" expanded="false" />
-            <element signature="e#132106#132107#0" expanded="false" />
-            <element signature="e#132318#132319#0" expanded="false" />
-            <element signature="e#132358#132359#0" expanded="false" />
-            <element signature="e#132673#132674#0" expanded="false" />
-            <element signature="e#132724#132725#0" expanded="false" />
-            <element signature="e#140916#140917#0" expanded="false" />
-            <element signature="e#140965#140966#0" expanded="false" />
-            <element signature="e#142638#142639#0" expanded="false" />
-            <element signature="e#142689#142690#0" expanded="false" />
-            <element signature="e#144830#144831#0" expanded="false" />
-            <element signature="e#144878#144879#0" expanded="false" />
-            <element signature="e#147052#147053#0" expanded="false" />
-            <element signature="e#147081#147082#0" expanded="false" />
-            <element signature="e#147927#147928#0" expanded="false" />
-            <element signature="e#147957#147958#0" expanded="false" />
-            <element signature="e#148440#148441#0" expanded="false" />
-            <element signature="e#148474#148475#0" expanded="false" />
-            <element signature="e#149005#149006#0" expanded="false" />
-            <element signature="e#149047#149048#0" expanded="false" />
-            <element signature="e#149632#149633#0" expanded="false" />
-            <element signature="e#149676#149677#0" expanded="false" />
-            <element signature="e#156139#156140#0" expanded="false" />
-            <element signature="e#156176#156177#0" expanded="false" />
-            <element signature="e#156265#156644#0" expanded="false" />
-            <element signature="e#156643#156644#0" expanded="false" />
-            <element signature="e#156718#156719#0" expanded="false" />
-            <element signature="e#156745#156746#0" expanded="false" />
-            <element signature="e#156846#156847#0" expanded="false" />
-            <element signature="e#156873#156874#0" expanded="false" />
-            <element signature="e#156964#156965#0" expanded="false" />
-            <element signature="e#157001#157002#0" expanded="false" />
-            <element signature="e#159163#159164#0" expanded="false" />
-            <element signature="e#159191#159192#0" expanded="false" />
-            <element signature="e#159535#159536#0" expanded="false" />
-            <element signature="e#159574#159575#0" expanded="false" />
-            <element signature="e#162895#162896#0" expanded="false" />
-            <element signature="e#162932#162933#0" expanded="false" />
-            <element signature="e#163088#163089#0" expanded="false" />
-            <element signature="e#163114#163115#0" expanded="false" />
-            <element signature="e#163286#163287#0" expanded="false" />
-            <element signature="e#163316#163317#0" expanded="false" />
-            <element signature="e#163504#163505#0" expanded="false" />
-            <element signature="e#163538#163539#0" expanded="false" />
-            <element signature="e#163722#163723#0" expanded="false" />
-            <element signature="e#163755#163756#0" expanded="false" />
-            <element signature="e#163943#163944#0" expanded="false" />
-            <element signature="e#163977#163978#0" expanded="false" />
-            <element signature="e#164297#164298#0" expanded="false" />
-            <element signature="e#164326#164327#0" expanded="false" />
-            <element signature="e#164548#164549#0" expanded="false" />
-            <element signature="e#164577#164578#0" expanded="false" />
-            <element signature="e#164709#164710#0" expanded="false" />
-            <element signature="e#164745#164746#0" expanded="false" />
-            <element signature="e#164919#164920#0" expanded="false" />
-            <element signature="e#164959#164960#0" expanded="false" />
-            <element signature="e#173504#173505#0" expanded="false" />
-            <element signature="e#173553#173554#0" expanded="false" />
-            <element signature="e#175271#175272#0" expanded="false" />
-            <element signature="e#175322#175323#0" expanded="false" />
-            <element signature="e#177906#177907#0" expanded="false" />
-            <element signature="e#177954#177955#0" expanded="false" />
-            <element signature="e#181147#181148#0" expanded="false" />
-            <element signature="e#181176#181177#0" expanded="false" />
-            <element signature="e#182095#182096#0" expanded="false" />
-            <element signature="e#182136#182137#0" expanded="false" />
-            <element signature="e#182673#182674#0" expanded="false" />
-            <element signature="e#182703#182704#0" expanded="false" />
-            <element signature="e#183186#183187#0" expanded="false" />
-            <element signature="e#183220#183221#0" expanded="false" />
-            <element signature="e#183739#183740#0" expanded="false" />
-            <element signature="e#183777#183778#0" expanded="false" />
-            <element signature="e#184317#184318#0" expanded="false" />
-            <element signature="e#184354#184355#0" expanded="false" />
-            <element signature="e#184891#184892#0" expanded="false" />
-            <element signature="e#184929#184930#0" expanded="false" />
-            <element signature="e#193352#193353#0" expanded="false" />
-            <element signature="e#193418#193419#0" expanded="false" />
-            <element signature="e#195179#195573#0" expanded="false" />
-            <element signature="e#195572#195573#0" expanded="false" />
-            <element signature="e#195652#195653#0" expanded="false" />
-            <element signature="e#195679#195680#0" expanded="false" />
-            <element signature="e#195785#195786#0" expanded="false" />
-            <element signature="e#195812#195813#0" expanded="false" />
-            <element signature="e#197527#197528#0" expanded="false" />
-            <element signature="e#197555#197556#0" expanded="false" />
-            <element signature="e#197780#197781#0" expanded="false" />
-            <element signature="e#197819#197820#0" expanded="false" />
-            <element signature="e#200758#200759#0" expanded="false" />
-            <element signature="e#200784#200785#0" expanded="false" />
-            <element signature="e#200965#200966#0" expanded="false" />
-            <element signature="e#200996#200997#0" expanded="false" />
-            <element signature="e#201216#201217#0" expanded="false" />
-            <element signature="e#201258#201259#0" expanded="false" />
-            <element signature="e#201555#201556#0" expanded="false" />
-            <element signature="e#201597#201598#0" expanded="false" />
-            <element signature="e#209289#209290#0" expanded="false" />
-            <element signature="e#209338#209339#0" expanded="false" />
-            <element signature="e#211065#211066#0" expanded="false" />
-            <element signature="e#211116#211117#0" expanded="false" />
-            <element signature="e#213149#213150#0" expanded="false" />
-            <element signature="e#213197#213198#0" expanded="false" />
-            <element signature="e#215261#215262#0" expanded="false" />
-            <element signature="e#215290#215291#0" expanded="false" />
-            <element signature="e#216148#216149#0" expanded="false" />
-            <element signature="e#216178#216179#0" expanded="false" />
-            <element signature="e#216669#216670#0" expanded="false" />
-            <element signature="e#216704#216705#0" expanded="false" />
-            <element signature="e#217257#217258#0" expanded="false" />
-            <element signature="e#217303#217304#0" expanded="false" />
-            <element signature="e#218293#218294#0" expanded="false" />
-            <element signature="e#218371#218372#0" expanded="false" />
-            <element signature="e#223705#224102#0" expanded="false" />
-            <element signature="e#224101#224102#0" expanded="false" />
-            <element signature="e#224182#224183#0" expanded="false" />
-            <element signature="e#224209#224210#0" expanded="false" />
-            <element signature="e#224316#224317#0" expanded="false" />
-            <element signature="e#224343#224344#0" expanded="false" />
-            <element signature="e#225500#225501#0" expanded="false" />
-            <element signature="e#225528#225529#0" expanded="false" />
-            <element signature="e#225749#225750#0" expanded="false" />
-            <element signature="e#225788#225789#0" expanded="false" />
-            <element signature="e#228129#228130#0" expanded="false" />
-            <element signature="e#228166#228167#0" expanded="false" />
-            <element signature="e#228422#228423#0" expanded="false" />
-            <element signature="e#228471#228472#0" expanded="false" />
-            <element signature="e#234728#234729#0" expanded="false" />
-            <element signature="e#234777#234778#0" expanded="false" />
-            <element signature="e#236540#236541#0" expanded="false" />
-            <element signature="e#236591#236592#0" expanded="false" />
-            <element signature="e#238285#238286#0" expanded="false" />
-            <element signature="e#238333#238334#0" expanded="false" />
-            <element signature="e#240263#240264#0" expanded="false" />
-            <element signature="e#240292#240293#0" expanded="false" />
-            <element signature="e#241192#241193#0" expanded="false" />
-            <element signature="e#241233#241234#0" expanded="false" />
-            <element signature="e#241845#241846#0" expanded="false" />
-            <element signature="e#241898#241899#0" expanded="false" />
-            <element signature="e#243424#243833#0" expanded="false" />
-            <element signature="e#243832#243833#0" expanded="false" />
-            <element signature="e#243917#243918#0" expanded="false" />
-            <element signature="e#243944#243945#0" expanded="false" />
-            <element signature="e#244055#244056#0" expanded="false" />
-            <element signature="e#244082#244083#0" expanded="false" />
-            <element signature="e#245343#245344#0" expanded="false" />
-            <element signature="e#245371#245372#0" expanded="false" />
-            <element signature="e#245631#245632#0" expanded="false" />
-            <element signature="e#245670#245671#0" expanded="false" />
-            <element signature="e#248237#248238#0" expanded="false" />
-            <element signature="e#248274#248275#0" expanded="false" />
-            <element signature="e#248430#248431#0" expanded="false" />
-            <element signature="e#248456#248457#0" expanded="false" />
-            <element signature="e#248640#248641#0" expanded="false" />
-            <element signature="e#248673#248674#0" expanded="false" />
-            <element signature="e#248861#248862#0" expanded="false" />
-            <element signature="e#248895#248896#0" expanded="false" />
-            <element signature="e#249079#249080#0" expanded="false" />
-            <element signature="e#249112#249113#0" expanded="false" />
-            <element signature="e#256337#256338#0" expanded="false" />
-            <element signature="e#256386#256387#0" expanded="false" />
-            <element signature="e#258023#258024#0" expanded="false" />
-            <element signature="e#258074#258075#0" expanded="false" />
-            <element signature="e#259806#259807#0" expanded="false" />
-            <element signature="e#259854#259855#0" expanded="false" />
-            <element signature="e#261974#261975#0" expanded="false" />
-            <element signature="e#262003#262004#0" expanded="false" />
-            <element signature="e#262874#262875#0" expanded="false" />
-            <element signature="e#262915#262916#0" expanded="false" />
-            <element signature="e#263452#263453#0" expanded="false" />
-            <element signature="e#263482#263483#0" expanded="false" />
-            <element signature="e#263974#263975#0" expanded="false" />
-            <element signature="e#264011#264012#0" expanded="false" />
-            <element signature="e#264548#264549#0" expanded="false" />
-            <element signature="e#264586#264587#0" expanded="false" />
-            <element signature="e#265126#265127#0" expanded="false" />
-            <element signature="e#265163#265164#0" expanded="false" />
-            <element signature="e#266379#266380#0" expanded="false" />
-            <element signature="e#266416#266417#0" expanded="false" />
-            <element signature="e#266501#266868#0" expanded="false" />
-            <element signature="e#266867#266868#0" expanded="false" />
-            <element signature="e#266938#266939#0" expanded="false" />
-            <element signature="e#266965#266966#0" expanded="false" />
-            <element signature="e#267062#267063#0" expanded="false" />
-            <element signature="e#267089#267090#0" expanded="false" />
-            <element signature="e#267176#267177#0" expanded="false" />
-            <element signature="e#267213#267214#0" expanded="false" />
-            <element signature="e#268075#268076#0" expanded="false" />
-            <element signature="e#268103#268104#0" expanded="false" />
-            <element signature="e#268287#268288#0" expanded="false" />
-            <element signature="e#268326#268327#0" expanded="false" />
-            <element signature="e#270527#270528#0" expanded="false" />
-            <element signature="e#270553#270554#0" expanded="false" />
-            <element signature="e#270742#270743#0" expanded="false" />
-            <element signature="e#270775#270776#0" expanded="false" />
-            <element signature="e#276623#276624#0" expanded="false" />
-            <element signature="e#276672#276673#0" expanded="false" />
-            <element signature="e#278318#278319#0" expanded="false" />
-            <element signature="e#278369#278370#0" expanded="false" />
-            <element signature="e#279881#279882#0" expanded="false" />
-            <element signature="e#279929#279930#0" expanded="false" />
-            <element signature="e#281729#281730#0" expanded="false" />
-            <element signature="e#281758#281759#0" expanded="false" />
-            <element signature="e#282598#282599#0" expanded="false" />
-            <element signature="e#282628#282629#0" expanded="false" />
-            <element signature="e#283125#283126#0" expanded="false" />
-            <element signature="e#283162#283163#0" expanded="false" />
-            <element signature="e#284387#284388#0" expanded="false" />
-            <element signature="e#284424#284425#0" expanded="false" />
-            <element signature="e#284510#284880#0" expanded="false" />
-            <element signature="e#284879#284880#0" expanded="false" />
-            <element signature="e#284951#284952#0" expanded="false" />
-            <element signature="e#284978#284979#0" expanded="false" />
-            <element signature="e#285076#285077#0" expanded="false" />
-            <element signature="e#285103#285104#0" expanded="false" />
-            <element signature="e#285191#285192#0" expanded="false" />
-            <element signature="e#285228#285229#0" expanded="false" />
-            <element signature="e#287579#287580#0" expanded="false" />
-            <element signature="e#287607#287608#0" expanded="false" />
-            <element signature="e#288032#288033#0" expanded="false" />
-            <element signature="e#288071#288072#0" expanded="false" />
-            <element signature="e#291671#291672#0" expanded="false" />
-            <element signature="e#291708#291709#0" expanded="false" />
-            <element signature="e#291864#291865#0" expanded="false" />
-            <element signature="e#291890#291891#0" expanded="false" />
-            <element signature="e#292062#292063#0" expanded="false" />
-            <element signature="e#292092#292093#0" expanded="false" />
-            <element signature="e#292300#292301#0" expanded="false" />
-            <element signature="e#292339#292340#0" expanded="false" />
-            <element signature="e#292543#292544#0" expanded="false" />
-            <element signature="e#292581#292582#0" expanded="false" />
-            <element signature="e#292745#292746#0" expanded="false" />
-            <element signature="e#292773#292774#0" expanded="false" />
-            <element signature="e#292981#292982#0" expanded="false" />
-            <element signature="e#293007#293008#0" expanded="false" />
-            <element signature="e#293168#293169#0" expanded="false" />
-            <element signature="e#293194#293195#0" expanded="false" />
-            <element signature="e#293565#293566#0" expanded="false" />
-            <element signature="e#293608#293609#0" expanded="false" />
-            <element signature="e#294563#294564#0" expanded="false" />
-            <element signature="e#294591#294592#0" expanded="false" />
-            <element signature="e#304231#304232#0" expanded="false" />
-            <element signature="e#304280#304281#0" expanded="false" />
-            <element signature="e#306016#306017#0" expanded="false" />
-            <element signature="e#306067#306068#0" expanded="false" />
-            <element signature="e#308560#308561#0" expanded="false" />
-            <element signature="e#308608#308609#0" expanded="false" />
-            <element signature="e#311314#311315#0" expanded="false" />
-            <element signature="e#311343#311344#0" expanded="false" />
-            <element signature="e#312236#312237#0" expanded="false" />
-            <element signature="e#312277#312278#0" expanded="false" />
-            <element signature="e#312814#312815#0" expanded="false" />
-            <element signature="e#312844#312845#0" expanded="false" />
-            <element signature="e#313327#313328#0" expanded="false" />
-            <element signature="e#313361#313362#0" expanded="false" />
-            <element signature="e#313895#313896#0" expanded="false" />
-            <element signature="e#313938#313939#0" expanded="false" />
-            <element signature="e#314523#314524#0" expanded="false" />
-            <element signature="e#314565#314566#0" expanded="false" />
-            <element signature="e#315114#315115#0" expanded="false" />
-            <element signature="e#315146#315147#0" expanded="false" />
-            <element signature="e#315719#315720#0" expanded="false" />
-            <element signature="e#315749#315750#0" expanded="false" />
-            <element signature="e#316344#316345#0" expanded="false" />
-            <element signature="e#316374#316375#0" expanded="false" />
-            <element signature="e#317330#317331#0" expanded="false" />
-            <element signature="e#317410#317411#0" expanded="false" />
-            <element signature="e#322570#322571#0" expanded="false" />
-            <element signature="e#322602#322603#0" expanded="false" />
-            <element signature="e#324099#324499#0" expanded="false" />
-            <element signature="e#324498#324499#0" expanded="false" />
-            <element signature="e#324580#324581#0" expanded="false" />
-            <element signature="e#324607#324608#0" expanded="false" />
-            <element signature="e#324715#324716#0" expanded="false" />
-            <element signature="e#324742#324743#0" expanded="false" />
-            <element signature="e#325823#325824#0" expanded="false" />
-            <element signature="e#325851#325852#0" expanded="false" />
-            <element signature="e#326044#326045#0" expanded="false" />
-            <element signature="e#326083#326084#0" expanded="false" />
-            <element signature="e#328337#328338#0" expanded="false" />
-            <element signature="e#328363#328364#0" expanded="false" />
-            <element signature="e#328544#328545#0" expanded="false" />
-            <element signature="e#328575#328576#0" expanded="false" />
-            <element signature="e#334572#334573#0" expanded="false" />
-            <element signature="e#334621#334622#0" expanded="false" />
-            <element signature="e#336366#336367#0" expanded="false" />
-            <element signature="e#336417#336418#0" expanded="false" />
-            <element signature="e#338011#338012#0" expanded="false" />
-            <element signature="e#338059#338060#0" expanded="false" />
-            <element signature="e#339897#339898#0" expanded="false" />
-            <element signature="e#339926#339927#0" expanded="false" />
-            <element signature="e#340788#340789#0" expanded="false" />
-            <element signature="e#340818#340819#0" expanded="false" />
-            <element signature="e#341309#341310#0" expanded="false" />
-            <element signature="e#341344#341345#0" expanded="false" />
-            <element signature="e#342746#343149#0" expanded="false" />
-            <element signature="e#343148#343149#0" expanded="false" />
-            <element signature="e#343231#343232#0" expanded="false" />
-            <element signature="e#343258#343259#0" expanded="false" />
-            <element signature="e#343367#343368#0" expanded="false" />
-            <element signature="e#343394#343395#0" expanded="false" />
-            <element signature="e#347484#347485#0" expanded="false" />
-            <element signature="e#347511#347512#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1611,14 +1013,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="13" column="17" lean-forward="false" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/target/generated-sources/protobuf/grpc-java/com/augustine/raft/proto/RaftGrpc.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="146">
@@ -1639,14 +1033,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="146">
           <caret line="74" column="0" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="63" column="74" lean-forward="true" selection-start-line="63" selection-start-column="74" selection-end-line="63" selection-end-column="74" />
           <folding />
         </state>
       </provider>
@@ -1760,25 +1146,17 @@
     <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/VoteCounterTests.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
-          <caret line="161" column="55" lean-forward="true" selection-start-line="161" selection-start-column="55" selection-end-line="161" selection-end-column="55" />
+          <caret line="161" column="55" lean-forward="false" selection-start-line="161" selection-start-column="55" selection-end-line="161" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="59" column="32" lean-forward="false" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/LogEntrySerializationTests.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
-          <caret line="49" column="9" lean-forward="true" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
+          <caret line="49" column="9" lean-forward="false" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -1786,7 +1164,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/CompletableFutures.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+          <caret line="23" column="9" lean-forward="false" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -1802,7 +1180,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftFollowerRole.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
             <element signature="e#161#162#0" expanded="true" />
             <element signature="e#190#191#0" expanded="true" />
@@ -1838,17 +1216,173 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/RaftRpcClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="18" column="1" lean-forward="true" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/AppendEntriesRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="18" column="31" lean-forward="false" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="29" column="61" lean-forward="true" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/DelegatingRaftMessageHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="526" column="96" lean-forward="false" selection-start-line="526" selection-start-column="96" selection-end-line="526" selection-end-column="96" />
+        <state relative-caret-position="206">
+          <caret line="195" column="35" lean-forward="false" selection-start-line="195" selection-start-column="35" selection-end-line="195" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7273#7274#0" expanded="true" />
-            <element signature="e#7306#7307#0" expanded="true" />
+            <element signature="e#7807#7808#0" expanded="true" />
+            <element signature="e#7840#7841#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/Scanner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="1532" column="18" lean-forward="false" selection-start-line="1532" selection-start-column="18" selection-end-line="1532" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="24" column="46" lean-forward="true" selection-start-line="24" selection-start-column="46" selection-end-line="24" selection-end-column="46" />
+          <folding>
+            <element signature="e#3009#3010#0" expanded="true" />
+            <element signature="e#3062#3063#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/NetworkPartitioningMessageHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="e#641#642#0" expanded="true" />
+            <element signature="e#700#701#0" expanded="true" />
+            <element signature="e#738#739#0" expanded="true" />
+            <element signature="e#780#781#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="140" column="68" lean-forward="true" selection-start-line="140" selection-start-column="68" selection-end-line="140" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>raft</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: aopalliance:aopalliance:1.0</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 
 @Slf4j
-public class GrpcRaftServer extends RaftGrpc.RaftImplBase{
+public class GrpcRaftServer extends RaftGrpc.RaftImplBase {
 
     private final RaftMessageHandler messageHandler;
     private final ProtoSerializer messageSerializer;
@@ -48,7 +48,8 @@ public class GrpcRaftServer extends RaftGrpc.RaftImplBase{
 
 
     @Override
-    public void appendEntries(RaftRpc.AppendEntriesRequest request, StreamObserver<RaftRpc.AppendEntriesResponse> responseObserver) {
+    public void appendEntries(RaftRpc.AppendEntriesRequest request,
+                              StreamObserver<RaftRpc.AppendEntriesResponse> responseObserver) {
         this.log.debug("Recvd Append entries request from server: {}", request.getRequestServerId());
         AppendEntriesResponse response = messageHandler.handleAppendEntries(this.messageSerializer.fromProtobuf(request));
         responseObserver.onNext(this.messageSerializer.toProtobuf(response));

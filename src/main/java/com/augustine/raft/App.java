@@ -16,19 +16,22 @@ import com.augustine.raft.snapshot.Snapshot;
 import com.augustine.raft.wal.LogEntry;
 import com.augustine.raft.wal.LogEntryType;
 import com.augustine.raft.wal.PersistentLog;
+import com.google.common.base.Function;
+import com.google.common.primitives.Primitives;
 import com.google.common.util.concurrent.Uninterruptibles;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 /**
  * Hello world!
@@ -58,43 +61,29 @@ public class App
             throws IOException, InterruptedException, ExecutionException{
         Logger root = (Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
         root.setLevel(Level.INFO);
-        new Thread(App::deadLockDetect).start();
        foo();
     }
 
-    private static void deadLockDetect(){
-        while (true) {
-            ThreadMXBean bean = ManagementFactory.getThreadMXBean();
-            long[] threadIds = bean.findDeadlockedThreads(); // Returns null if no threads are deadlocked.
-
-            if (threadIds != null) {
-                ThreadInfo[] infos = bean.getThreadInfo(threadIds);
-
-                for (ThreadInfo info : infos) {
-                    StackTraceElement[] stack = info.getStackTrace();
-                    for(StackTraceElement element : stack) {
-                        // Log or store stack trace information.
-                        System.out.println(" " + element.toString());
-                    }
-                }
-            }
-            Uninterruptibles.sleepUninterruptibly(100, TimeUnit.MILLISECONDS);
-        }
-    }
 
     private static void foo() throws IOException, InterruptedException {
-        RaftServer server1 = new RaftServer(ServerConfiguration.fromDirectory("/tmp/raft/server1"), getNoop());
+        Function<RaftMessageHandler, RaftMessageHandler> networPartitioningHandler = h -> new NetworkPartitioningMessageHandler(h);
+        RaftServer server1 = new RaftServer(ServerConfiguration.fromDirectory("/tmp/raft/server1"),
+                getNoop(),
+                networPartitioningHandler);
 
         server1.start();
-        RaftServer server2 = new RaftServer(ServerConfiguration.fromDirectory("/tmp/raft/server2"), getNoop());
+        RaftServer server2 = new RaftServer(ServerConfiguration.fromDirectory("/tmp/raft/server2"), getNoop(),
+                networPartitioningHandler);
 
         server2.start();
 
-        RaftServer server3 = new RaftServer(ServerConfiguration.fromDirectory("/tmp/raft/server3"), getNoop());
+        RaftServer server3 = new RaftServer(ServerConfiguration.fromDirectory("/tmp/raft/server3"), getNoop(),
+                networPartitioningHandler);
 
         server3.start();
         //Uninterruptibles.sleepUninterruptibly(100000, TimeUnit.MILLISECONDS);
-
+        Thread cmdThread = new Thread(()-> commandStream(server1, server2, server3));
+        cmdThread.start();
         while (true)
         {
             try {
@@ -117,8 +106,45 @@ public class App
             }catch (Throwable e){
                 System.out.println(e);
             }
-
         }
+    }
+
+    private static void commandStream(RaftServer... servers){
+       Scanner scanner = new Scanner(System.in);
+       String cmd = null;
+       while ((cmd = scanner.nextLine()) != null) {
+           if(cmd.equals("l")) {
+               System.out.println("Creating network partition");
+               partitionLeader(servers);
+           }else if(cmd.equals("h")){
+               System.out.println("Healing all partitions");
+               healAllPartitions(servers);
+           }else if(cmd.equals("q")){
+               System.exit(0);
+           }else{
+               System.out.println("Unknown command");
+           }
+       }
+    }
+
+    private static void partitionLeader(RaftServer... servers){
+        Optional<RaftServer> leaderIfAny = Arrays.stream(servers).filter(e -> e.getServerRole() == ServerRole.Leader).findFirst();
+        List<RaftServer> others = Arrays.stream(servers).filter(e -> e.getServerRole() != ServerRole.Leader)
+                .collect(Collectors.toList());
+
+        if(leaderIfAny.isPresent()){
+            NetworkPartitioningMessageHandler currentMessageHandler = (NetworkPartitioningMessageHandler) leaderIfAny.get().getCurrentMessageHandler();
+            others.forEach (e -> {
+                currentMessageHandler.setPartition(e.getServerId());
+            });
+            others.forEach(e -> ((NetworkPartitioningMessageHandler)e.getCurrentMessageHandler())
+                    .setPartition(leaderIfAny.get().getServerId()));
+        }
+    }
+
+    private static void healAllPartitions(RaftServer... servers){
+        Arrays.stream(servers).forEach(server -> ((NetworkPartitioningMessageHandler)server.getCurrentMessageHandler())
+                .healAllPartitions());
     }
 
     public static void verify(){
