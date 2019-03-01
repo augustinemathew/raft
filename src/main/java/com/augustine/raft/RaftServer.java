@@ -1,18 +1,13 @@
 package com.augustine.raft;
 
 import com.augustine.raft.proto.ProtoSerializerImpl;
-import com.augustine.raft.rpc.AppendEntriesRequest;
-import com.augustine.raft.rpc.AppendEntriesResponse;
-import com.augustine.raft.rpc.InstallSnapshotRequest;
-import com.augustine.raft.rpc.InstallSnapshotResponse;
-import com.augustine.raft.rpc.RaftRpcClient;
-import com.augustine.raft.rpc.VoteRequest;
-import com.augustine.raft.rpc.VoteResponse;
+import com.augustine.raft.rpc.*;
 import com.augustine.raft.rpc.impl.GrpcRaftServer;
 import com.augustine.raft.snapshot.SnapshotManager;
 import com.augustine.raft.wal.Log;
 import com.augustine.raft.wal.LogEntry;
 import com.augustine.raft.wal.LogEntryType;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.base.Preconditions;
@@ -33,6 +28,20 @@ import java.util.stream.Collectors;
 
 
 public class RaftServer implements RaftMessageHandler {
+
+    public interface RaftServerEventListener extends Comparable<RaftServerEventListener> {
+        default void onLeaderChange(long newLeader, long newLeaderTerm){}
+        default void onServerStateRole(ServerRole current, ServerRole next, long currentTerm){}
+
+        @Override
+        default int compareTo(RaftServerEventListener o) {
+            if(o == null){
+                return 1;
+            }
+
+            return Integer.compare(this.hashCode(), o.hashCode());
+        }
+    }
 
     @Getter
     private final ServerConfiguration serverConfig;
@@ -56,7 +65,6 @@ public class RaftServer implements RaftMessageHandler {
     private final ConcurrentHashMap<Long,RaftRpcClient> rpcClients = new ConcurrentHashMap<>();
     private final Map<ServerRole, RaftRole> serverRoleRaftRoleMap;
 
-    private volatile long currentLeaderId;
 
     private final GrpcRaftServer server;
 
@@ -68,6 +76,10 @@ public class RaftServer implements RaftMessageHandler {
 
     private final Thread timerThread;
     private final AtomicBoolean stopTimerThread;
+    private volatile long currentLeaderId;
+    private volatile long currentLeaderTerm;
+
+    private final ConcurrentSkipListSet<RaftServerEventListener> eventListener = new ConcurrentSkipListSet<>();
 
     public RaftServer(@NonNull ServerConfiguration serverConfig,
                       @NonNull StateMachine stateMachine){
@@ -122,12 +134,12 @@ public class RaftServer implements RaftMessageHandler {
                     try {
                         Thread.sleep(1);
                     }catch (InterruptedException iex){
-                        this.log.warn("State machine thread interrupted. Exiting");
+                        warn("State machine thread interrupted. Exiting");
                         return;
                     }
                 }
             }
-            this.log.info("Exiting state machine application thread");
+            info("Exiting state machine application thread");
         };
     }
 
@@ -182,19 +194,18 @@ public class RaftServer implements RaftMessageHandler {
         }
     }
 
-    synchronized void requestStateTransition(@NonNull ServerRole targetState){
-        log.info("Stopping current role {}", this.serverRole);
-        this.serverRoleRaftRoleMap.get(this.serverRole).stop();
+    private synchronized void requestStateTransition(@NonNull ServerRole targetState){
+        log.info("Stopping current role {}", serverRole);
+        RaftRole raftRole = this.serverRoleRaftRoleMap.get(this.serverRole);
+        raftRole.stop();
+        ServerRole oldRole = this.serverRole;
         this.serverRole = targetState;
-        log.info("Starting new role {}", this.serverRole);
+        log.info("Starting new role {}", serverRole);
         if(targetState == ServerRole.Leader) {
-            this.currentLeaderId = this.serverId;
+            this.tryUpdateLeader(this.serverId, this.serverState.getCurrentTerm());
         }
-        this.serverRoleRaftRoleMap.get(targetState).start();;
-    }
-
-    public synchronized ServerRole getServerRole() {
-        return serverRole;
+        this.serverRoleRaftRoleMap.get(targetState).start();
+        this.fireServerRoleChangedEvent(oldRole, this.serverRole, this.getServerState().getCurrentTerm());
     }
 
     public synchronized void proposeConfigurationChange(RaftConfiguration raftConfiguration){
@@ -219,7 +230,7 @@ public class RaftServer implements RaftMessageHandler {
         throwIfNotRunning();
         throwInvalidRoleForOperation(ServerRole.Leader);
 
-        this.log.info("{} proposed {} entries for term = {}",this, proposals.size(),
+        info("proposed {} entries for term = {}",proposals.size(),
                 this.serverState.getCurrentTerm());
         this.getWriteAheadLog().appendLogEntries(proposals.stream().map(p ->
         LogEntry.builder()
@@ -228,6 +239,13 @@ public class RaftServer implements RaftMessageHandler {
                 .collect(Collectors.toList()));
     }
 
+    public void subscribe(@NonNull RaftServerEventListener listener) {
+        this.eventListener.add(listener);
+    }
+
+    public void unsubscribe(@NonNull RaftServerEventListener listener) {
+        this.eventListener.remove(listener);
+    }
 
     /**
      * Get quorum size of the cluster
@@ -245,25 +263,29 @@ public class RaftServer implements RaftMessageHandler {
         this.scheduledExecutorService.schedule(()-> this.requestStateTransition(ServerRole.Leader),0, TimeUnit.MILLISECONDS);
     }
 
-    public synchronized void recordMajorityHeartbeat(){
+    synchronized void recordMajorityHeartbeat(){
         this.lastAppendEntriesOrVoteGrantedOrMajorityResponse = Instant.now();
     }
 
+    public synchronized ServerRole getServerRole() {
+        return serverRole;
+    }
+
     private void timerThreadLogic() {
-        log.info("{} Starting timer logic", this);
+        info("Starting timer logic");
         while(!this.stopTimerThread.get()){
             try {
                 this.timeoutLogic();
             }catch (Exception e){
-                this.log.error("{} Exception in timer thread logic {}",this, e);
+                error("Exception in timer thread logic ", e);
             }
             Uninterruptibles.sleepUninterruptibly(this.getRaftConfiguration().getRandomizedElectionTimeout(), TimeUnit.MILLISECONDS);
         }
-        log.info("{} Exiting timer logic", this);
+        info("Exiting timer logic");
     }
 
     private synchronized void timeoutLogic(){
-        log.info("{} Election timer fired {}", this, this.serverRole.toString());
+        info("Election timer fired {}",serverRole.toString());
         try {
             if (this.serverRole == ServerRole.Follower) {
             /*
@@ -277,7 +299,7 @@ public class RaftServer implements RaftMessageHandler {
                         (elaspedRpcTime.compareTo(Duration.ofMillis(this.getRaftConfiguration().getMinElectionTimeoutInMs())) <= 0)) {
                     return;
                 }
-                this.log.info("{} Election timer expired converting to candidate elapsed time {}", this, elaspedRpcTime);
+                info("Election timer expired converting to candidate elapsed time {}", elaspedRpcTime);
                 this.requestStateTransition(ServerRole.Candidate);
             } else if (this.serverRole == ServerRole.Candidate) {
                 //If we are candidate. Lets restart the election again
@@ -287,13 +309,15 @@ public class RaftServer implements RaftMessageHandler {
                 if (//Check if we revd majority heartbeat
                         (lastMajorityHeartbeat.compareTo(Duration.ofMillis(this.getRaftConfiguration()
                                 .getMinElectionTimeoutInMs())) <= 0)) {
+                    info("Still maintaining leadership as last majority heartbeat was at {}",
+                            lastMajorityHeartbeat);
                     return;
                 }
-                this.log.info("{} Stepping down from being a leader as we could not hear from a majority", this);
+                info("Stepping down from being a leader as we could not hear from a majority");
                 this.requestStateTransition(ServerRole.Candidate);
             }
         }catch (Exception e) {
-            this.log.info("{} Exception in timeout handler ", this, e);
+            info("{} Exception in timeout handler ", e);
         }
     }
 
@@ -308,7 +332,7 @@ public class RaftServer implements RaftMessageHandler {
     private synchronized boolean updateTermIfWeAreBehindAndConvertToFollower(long term){
         long oldTerm = this.serverState.getCurrentTerm();
         if(updateTerm(term)){
-            this.log.info("{} Converting to follower due to term mismatch new term {} {}", this, oldTerm, term);
+            info("Converting to follower due to term mismatch old term {} new term {}", oldTerm, term);
             this.requestStateTransition(ServerRole.Follower);
             return true;
         }else{
@@ -318,7 +342,7 @@ public class RaftServer implements RaftMessageHandler {
 
     private synchronized boolean updateTerm(long term){
         if(this.serverState.getCurrentTerm() < term) {
-            this.log.info("{} Term {} is > our term {}",this, term, this.serverState.getCurrentTerm());
+            info("Term {} is > our term {}",term, this.serverState.getCurrentTerm());
             this.serverState.setVotedForAndCurrentTerm(-1,term);
             return true;
         }else{
@@ -332,15 +356,12 @@ public class RaftServer implements RaftMessageHandler {
             this.lastAppendEntriesOrVoteGrantedOrMajorityResponse = Instant.now();
 
             if (this.updateTermIfWeAreBehindAndConvertToFollower(request.getTerm())) {
-                this.log.info("Append entries term is > our term ");
+                info("Append entries term is > our term ");
             }
 
-            if (this.currentLeaderId != request.getLeaderId()) {
-                this.currentLeaderId = request.getLeaderId();
-            }
+            this.tryUpdateLeader(request.getLeaderId(), request.getTerm());
 
-
-            this.log.info("{} Current log status lastIndex {} lastTerm {} request prev Index {} prev Term {} entry count {}", this,
+            debug("Current log status lastIndex {} lastTerm {} request prev Index {} prev Term {} entry count {}",
                     this.getWriteAheadLog().getLastEntryIndex(), this.getWriteAheadLog()
                             .getLogEntry(this.getWriteAheadLog().getLastEntryIndex()).getTerm(),
                     request.getPrevLogIndex(), request.getPrevLogTerm(), request.getEntries().length);
@@ -394,17 +415,19 @@ public class RaftServer implements RaftMessageHandler {
                 ;
             //If a conflict is found remove all entries proceeding it including that entry
             if (nextLogIndex <= this.getWriteAheadLog().getLastEntryIndex() && !didnotConflict) {
-                this.log.warn("{} found conflicting entries at {}", this, nextLogIndex);
+                warn("Found conflicting entries at {}", nextLogIndex);
                 this.getWriteAheadLog().removeEntriesStartingFromIndex(nextLogIndex);
             }
 
             //Append the remaining entries to the end of the raftlog if any
             if (entriesToSkip < request.getEntries().length) {
                 if (entriesToSkip + request.getPrevLogIndex() != this.getWriteAheadLog().getLastEntryIndex()) {
-                    this.log.error("{} CRAY CRAY Corruption", this);
+                    error("CRAY CRAY Corruption");
                 }
-                this.log.info("Appending entries starting from {} upto including {}", entriesToSkip, request.getEntries().length - 1);
-                this.getWriteAheadLog().appendLogEntries(Arrays.asList(request.getEntries()).subList(entriesToSkip, request.getEntries().length));
+                info("Appending entries starting from {} upto including {}", entriesToSkip,
+                        request.getEntries().length - 1);
+                this.getWriteAheadLog().appendLogEntries(Arrays
+                        .asList(request.getEntries()).subList(entriesToSkip, request.getEntries().length));
             }
 
             setLastCommitIndex(request.getLeaderCommit());
@@ -432,13 +455,13 @@ public class RaftServer implements RaftMessageHandler {
     @Override
     public synchronized VoteResponse handleVoteRequest(VoteRequest request) {
         if(this.updateTermIfWeAreBehindAndConvertToFollower(request.getTerm())){
-            this.log.info("{} Recvd vote request.",this);
+            info("Recvd vote request. Converting to follower");
         }
 
         VoteResponse.VoteResponseBuilder responseBuilder = VoteResponse.builder();
         responseBuilder.term(this.serverState.getCurrentTerm());
         if(request.getTerm() < this.serverState.getCurrentTerm()){
-            this.log.info("{} Vote request for {}: request term {} < current term {}. Not granting vote", this,
+            info("Vote request for {}: request term {} < current term {}. Not granting vote",
                     request.getServerId(),request.getTerm(),this.serverState.getCurrentTerm());
             responseBuilder.voteGranted(false);
             return responseBuilder.build();
@@ -450,19 +473,20 @@ public class RaftServer implements RaftMessageHandler {
         long logIndex = this.getWriteAheadLog().getLastEntryIndex();
         long logTerm = this.getWriteAheadLog().getLogEntry(logIndex).getTerm();
 
-        boolean canVoteForCandidate = this.serverState.getVotedFor() == -1 ||
+        boolean canGrantVoteToCandidate = this.serverState.getVotedFor() == -1 ||
                 this.serverState.getVotedFor() == request.getCandidateId();
 
         boolean ourLogIsAtleastAsUpdateAsCandidate =(request.getLastLogTerm()>logTerm ||
                 (request.getLastLogTerm() == logTerm && logIndex<= request.getLastLogIndex()));
 
-        if(canVoteForCandidate && ourLogIsAtleastAsUpdateAsCandidate) {
-            this.log.info("{} Granting vote for {}", this, request.getCandidateId());
+        if(canGrantVoteToCandidate && ourLogIsAtleastAsUpdateAsCandidate) {
+            info("Granting vote for {}", request.getCandidateId());
             this.serverState.setVotedFor(serverId);
             this.lastAppendEntriesOrVoteGrantedOrMajorityResponse = Instant.now();
             responseBuilder.voteGranted(true);
         }else{
-            this.log.info("{} Rejecting vote for {} CanVote: {} logIsGood: {}", this, request.getCandidateId(), canVoteForCandidate, ourLogIsAtleastAsUpdateAsCandidate);
+            info("Rejecting vote for {} CanVote: {} logIsGood: {}",request.getCandidateId(),
+                    canGrantVoteToCandidate, ourLogIsAtleastAsUpdateAsCandidate);
             responseBuilder.voteGranted(false);
         }
         return responseBuilder.build();
@@ -470,32 +494,6 @@ public class RaftServer implements RaftMessageHandler {
 
     @Override
     public InstallSnapshotResponse handleInstallSnapshot(InstallSnapshotRequest request) {
-
-//        InstallSnapshotResponse.InstallSnapshotResponseBuilder builder = InstallSnapshotResponse.builder();
-//        builder.term(this.serverState.getCurrentTerm());
-//        if(updateTermIfWeAreBehindAndConvertToFollower(request.getTerm())){
-//            return builder.ok(false)
-//                    .build();
-//        }
-//
-//        try {
-//            if(!request.isDone()) {
-//                this.snapshotManager.appendToSnapshot(request.getLastIncludedIndex(), request.getLastIncludedTerm(), request.getOffset(),
-//                        request.getData());
-//                return builder.ok(true).build();
-//            }else{
-//
-//                Snapshot snapshot = this.snapshotManager.saveSnapshot(
-//                        request.getLastIncludedIndex(),
-//                        request.getLastIncludedTerm(),
-//                        request.getConfiguration(),
-//                        request.getSnaphotCheckum());
-//                return builder.ok(true).build();
-//            }
-//        }catch (IOException ioe){
-//            this.log.error("{} error in storing snapshot", this,ioe);
-//            return builder.ok(false).build();
-//        }
         return null;
     }
 
@@ -519,8 +517,12 @@ public class RaftServer implements RaftMessageHandler {
         return this.serverState.getLastCommitedIndex();
     }
 
-    synchronized long getLastCommitIndex(){
+    long getLastCommitIndex(){
         return this.serverState.getLastCommitedIndex();
+    }
+
+    long getCurrentLeaderId() {
+        return this.currentLeaderId;
     }
 
     RaftRpcClient getClient(long peerId){
@@ -529,6 +531,19 @@ public class RaftServer implements RaftMessageHandler {
                 .computeIfAbsent(peerId,
                         id -> this.getRaftConfiguration().getPeerList().get((int)peerId)
                                 .getClient(Math.min(10,this.getRaftConfiguration().getMinElectionTimeoutInMs()/2)));
+    }
+
+    @VisibleForTesting
+    synchronized void tryUpdateLeader(long potentialLeader, long potentialLeaderTerm){
+        if((this.currentLeaderId == - 1 && potentialLeaderTerm == currentLeaderTerm)
+                || potentialLeaderTerm > this.currentLeaderTerm) {
+            this.currentLeaderId = potentialLeader;
+            this.currentLeaderTerm = potentialLeaderTerm;
+            fireLeaderChangedEventAsync();
+        }else if(potentialLeaderTerm == currentLeaderTerm && potentialLeader != currentLeaderId){
+            log.error("Invalid leader update. Raft guarantees exactly one leader per term. current leader {} current term {}, proposed leader {} proposed term {}",
+                    currentLeaderId, currentLeaderTerm, potentialLeader, potentialLeaderTerm);
+        }
     }
 
     public String toString(){
@@ -545,5 +560,52 @@ public class RaftServer implements RaftMessageHandler {
         if(this.serverRole != expectedRole) {
             throw new IllegalStateException("Expected to be in state " + expectedRole + " + but was in" + serverRole);
         }
+    }
+
+
+    private void debug(String message, Object... args) {
+        this.log.debug(getServerId() + " " + message, args);
+    }
+
+    private void info(String message, Object... args) {
+        this.log.info(getServerId() + " " + message, args);
+    }
+
+    private void warn(String message, Object... args) {
+        this.log.warn(getServerId() + " " + message, args);
+    }
+
+    private void error(String message, Object... args) {
+        this.log.error(getServerId() + " " + message, args);
+    }
+
+    private void error(String message, Throwable error){
+        this.log.error(getServerId() + " "  + message, error);
+    }
+
+    private void fireLeaderChangedEventAsync(){
+        long currentLeaderId = this.currentLeaderId;
+        long currentLeaderTerm = this.currentLeaderTerm;
+        CompletableFuture.runAsync(()-> {
+            for (RaftServerEventListener listener : this.eventListener) {
+                try {
+                    listener.onLeaderChange(currentLeaderId, currentLeaderTerm);
+                }catch (Exception e){
+                    error("error firing leader change event", e);
+                }
+            }
+        });
+    }
+
+    private void fireServerRoleChangedEvent(ServerRole old, ServerRole current, long currentTerm){
+        CompletableFuture.runAsync(()-> {
+            for (RaftServerEventListener listener : this.eventListener) {
+                try {
+                    listener.onServerStateRole(old, current, currentTerm);
+                }catch (Exception e){
+                    error("error firing leader change event", e);
+                }
+            }
+        });
     }
 }

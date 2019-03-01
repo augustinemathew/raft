@@ -31,7 +31,7 @@ public class GrpcRaftServer extends RaftGrpc.RaftImplBase {
                           @NonNull ProtoSerializer messageSerializer) {
         this.messageHandler = server;
         this.server = ServerBuilder.forPort(port)
-                .executor(Executors.newFixedThreadPool(10))
+                .executor(Executors.newFixedThreadPool(1))
                 .addService(this)
                 .build();
         this.messageSerializer = messageSerializer;

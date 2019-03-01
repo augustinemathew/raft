@@ -24,7 +24,9 @@ public class RaftCandidateRole extends RaftRole {
         }
 
         this.stop();
-        this.getRaftState().setVotedForAndCurrentTerm(this.getServerId(), this.getRaftState().getCurrentTerm() + 1);
+        long newTerm = this.getRaftState().getCurrentTerm() + 1;
+        this.getRaftState().setVotedForAndCurrentTerm(this.getServerId(), newTerm);
+        this.server.tryUpdateLeader(-1, newTerm);
         this.electionRound = this.server.getScheduledExecutorService().schedule(this::electionLogic,0, TimeUnit.MILLISECONDS);
     }
 

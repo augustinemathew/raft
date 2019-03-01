@@ -42,7 +42,6 @@ message SnapshotHeader{
     bool isComplete = 5;
 }
 
-
 message PersistentState {
     int64 term = 1;
     int64 votedFor = 2;

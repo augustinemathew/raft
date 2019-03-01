@@ -15,16 +15,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class RaftLeaderRole extends RaftRole {
-    private final AtomicBoolean cancelLeaderHeartbeat = new AtomicBoolean(false);
+    private volatile AtomicBoolean cancelLeaderHeartbeat = new AtomicBoolean(false);
     @Getter(AccessLevel.PACKAGE)
     private volatile long[] nextIndex;
     @Getter(AccessLevel.PACKAGE)
@@ -49,15 +46,11 @@ public class RaftLeaderRole extends RaftRole {
         if(leaderHeartbeatTask != null) {
             return;
         }
-        this.cancelLeaderHeartbeat.set(false);
+        this.cancelLeaderHeartbeat = new AtomicBoolean(false);
         this.initializeNextAndMatchIndices();
-        Long firstEntryForTerm = this.getWriteAheadLog().appendLogEntries(
-                Arrays.asList(LogEntry.LogEntryBuilder.buildNoopEntry(this.getRaftState().getCurrentTerm())))
-                .get(0);
-        this.expectedCommitIndexForCurrentTerm = firstEntryForTerm;
         info("LSN {} value for first commit index in this term", this.expectedCommitIndexForCurrentTerm);
         this.leaderHeartbeatTask = this.server.getScheduledExecutorService()
-                .schedule(this::leaderHeartbeatTask,0, TimeUnit.MILLISECONDS);
+                .schedule(()->this.leaderHeartbeatTask(this.cancelLeaderHeartbeat),0, TimeUnit.MILLISECONDS);
         info("Started leader heartbeat task");
     }
 
@@ -68,9 +61,8 @@ public class RaftLeaderRole extends RaftRole {
 
         this.cancelLeaderHeartbeat.set(true);
         try{
-            this.leaderHeartbeatTask.get();
-        }catch (InterruptedException | ExecutionException ignored) {
-
+            this.leaderHeartbeatTask.get(1000, TimeUnit.MILLISECONDS);
+        }catch (InterruptedException | ExecutionException | TimeoutException ignored) {
         }
         info("Stopping leader heartbeat task");
         this.leaderHeartbeatTask = null;
@@ -91,8 +83,13 @@ public class RaftLeaderRole extends RaftRole {
         this.matchIndex[(int)this.getServerId()] = this.getWriteAheadLog().getLastEntryIndex();
     }
 
-    private void leaderHeartbeatTask(){
-        while (!this.cancelLeaderHeartbeat.get()) {
+    private void leaderHeartbeatTask(AtomicBoolean shutdownRequested) {
+        this.initializeNextAndMatchIndices();
+        Long firstEntryForTerm = this.getWriteAheadLog().appendLogEntries(
+                Arrays.asList(LogEntry.LogEntryBuilder.buildNoopEntry(this.getRaftState().getCurrentTerm())))
+                .get(0);
+        this.expectedCommitIndexForCurrentTerm = firstEntryForTerm;
+        while (!shutdownRequested.get()) {
             try {
                 info("sending append entries");
                 Map<RaftPeer, AppendEntriesRequest> peerToRequestMap = new HashMap<>();
@@ -110,7 +107,7 @@ public class RaftLeaderRole extends RaftRole {
                 }
 
                 waitUntilResponsesRecvd(peerToResponseMap);
-                int numResponsesRecvd = 1;//Count self
+                int numOkResponsesRecvd = 1;//Count self
                 for (RaftPeer peer : peerToResponseMap.keySet().stream().filter(l -> peerToResponseMap.get(l).isDone())
                         .collect(Collectors.toList())) {
                     AppendEntriesResponse response = peerToResponseMap.get(peer).get();
@@ -119,10 +116,13 @@ public class RaftLeaderRole extends RaftRole {
                             return;
                         }
                         updateMatchIndexForPeer(peer, peerToRequestMap.get(peer), response);
+                        if(response.isSucceeded()) {
+                            numOkResponsesRecvd++;
+                        }
                     }
-                    numResponsesRecvd++;
+
                 }
-                if(numResponsesRecvd >= this.server.getMajority()) {
+                if(numOkResponsesRecvd >= this.server.getMajority()) {
                     this.server.recordMajorityHeartbeat();
                 }
                 CompletableFutures.cancelAll(peerToResponseMap.values(), true);
@@ -165,7 +165,7 @@ public class RaftLeaderRole extends RaftRole {
                 AppendEntriesRequest.builder();
         request.leaderId(this.getServerId())
                 .serverId(this.getServerId())
-                .leaderCommit(this.server.getLastCommitIndex());
+                .leaderCommit(this.server.getServerState().getLastCommitedIndex());
 
         long nextIndex = this.nextIndex[peerId];
         info("append request for peer {} nextIndex {} lastEntryIndex {}" , peerId, nextIndex,
@@ -188,7 +188,7 @@ public class RaftLeaderRole extends RaftRole {
     synchronized long computeCommitIndex() {
         long[] sortedMatch = Arrays.stream(matchIndex).sorted().toArray();
         long newCommitIndex = Math.max(sortedMatch[server.getMajority()], server.getLastCommitIndex());
-        if(this.expectedCommitIndexForCurrentTerm < newCommitIndex) {
+        if(expectedCommitIndexForCurrentTerm < newCommitIndex) {
             return 0;
         }else {
             return newCommitIndex;

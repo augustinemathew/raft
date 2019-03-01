@@ -9,4 +9,23 @@ public interface StateMachine{
     void installSnapshot(Snapshot snapshot);
 
     Snapshot getSnapShot();
+
+    static StateMachine NOOP_MACHINE(){
+        return new StateMachine() {
+            @Override
+            public void apply(long lsn, byte[] input) {
+
+            }
+
+            @Override
+            public void installSnapshot(Snapshot snapshot) {
+
+            }
+
+            @Override
+            public Snapshot getSnapShot() {
+                return null;
+            }
+        };
+    }
 }

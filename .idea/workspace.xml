@@ -2,13 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7ad9891b-31e0-4c34-a3e7-1d136f5f4598" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/DelegatingRaftMessageHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/NetworkPartitioningMessageHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/ThreadUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerTests.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftCandidateRole.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftCandidateRole.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftLeaderRole.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftLeaderRole.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/ServerConfiguration.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/ServerConfiguration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/StateMachine.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/StateMachine.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java" afterPath="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources/raft.rpc.proto" afterPath="$PROJECT_DIR$/src/resources/raft.rpc.proto" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerInvariantsTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerInvariantsTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -24,114 +29,138 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="RaftState.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftState.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="149" column="28" lean-forward="false" selection-start-line="149" selection-start-column="28" selection-end-line="149" selection-end-column="28" />
+              <folding>
+                <element signature="e#6012#6013#0" expanded="true" />
+                <element signature="e#6062#6063#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="RaftServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="195" column="35" lean-forward="false" selection-start-line="195" selection-start-column="35" selection-end-line="195" selection-end-column="35" />
+            <state relative-caret-position="184">
+              <caret line="258" column="47" lean-forward="false" selection-start-line="258" selection-start-column="47" selection-end-line="258" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7807#7808#0" expanded="true" />
-                <element signature="e#7840#7841#0" expanded="true" />
+                <element signature="e#9824#9825#0" expanded="true" />
+                <element signature="e#9872#9873#0" expanded="true" />
+                <element signature="e#9946#9947#0" expanded="true" />
+                <element signature="e#9997#9998#0" expanded="true" />
+                <element signature="e#10127#10128#0" expanded="true" />
+                <element signature="e#10206#10207#0" expanded="true" />
+                <element signature="e#10262#10263#0" expanded="true" />
+                <element signature="e#10333#10334#0" expanded="true" />
+                <element signature="e#10694#10695#0" expanded="true" />
+                <element signature="e#10727#10728#0" expanded="true" />
+                <element signature="e#21946#21947#0" expanded="true" />
+                <element signature="e#21973#21974#0" expanded="true" />
+                <element signature="e#22903#22904#0" expanded="true" />
+                <element signature="e#22965#22966#0" expanded="true" />
+                <element signature="e#22998#22999#0" expanded="true" />
+                <element signature="e#23041#23042#0" expanded="true" />
+                <element signature="e#24850#24851#0" expanded="true" />
+                <element signature="e#24917#24918#0" expanded="true" />
+                <element signature="e#24974#24975#0" expanded="true" />
+                <element signature="e#25040#25041#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GrpcRaftClient.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftClient.java">
+      <file leaf-file-name="ConcurrentSkipListSet.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/ConcurrentSkipListSet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="24" column="46" lean-forward="true" selection-start-line="24" selection-start-column="46" selection-end-line="24" selection-end-column="46" />
+            <state relative-caret-position="188">
+              <caret line="93" column="13" lean-forward="false" selection-start-line="93" selection-start-column="13" selection-end-line="93" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RaftLeaderRole.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftLeaderRole.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
               <folding>
-                <element signature="e#3009#3010#0" expanded="true" />
-                <element signature="e#3062#3063#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java">
+      <file leaf-file-name="raft.rpc.proto" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/resources/raft.rpc.proto">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="140" column="68" lean-forward="true" selection-start-line="140" selection-start-column="68" selection-end-line="140" selection-end-column="68" />
+            <state relative-caret-position="175">
+              <caret line="12" column="18" lean-forward="false" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Scanner.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/Scanner.java">
+      <file leaf-file-name="ServerConfiguration.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/ServerConfiguration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="1532" column="18" lean-forward="false" selection-start-line="1532" selection-start-column="18" selection-end-line="1532" selection-end-column="18" />
+            <state relative-caret-position="90">
+              <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RaftRpcClient.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/RaftRpcClient.java">
+      <file leaf-file-name="RaftServerTests.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="18" column="1" lean-forward="true" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GrpcRaftServer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="29" column="61" lean-forward="true" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RaftMessageHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DelegatingRaftMessageHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/DelegatingRaftMessageHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NetworkPartitioningMessageHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/NetworkPartitioningMessageHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+            <state relative-caret-position="450">
+              <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
               <folding>
-                <element signature="e#641#642#0" expanded="true" />
-                <element signature="e#700#701#0" expanded="true" />
-                <element signature="e#738#739#0" expanded="true" />
-                <element signature="e#780#781#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#675#949#0" expanded="true" />
+                <element signature="e#948#949#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppendEntriesRequest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/AppendEntriesRequest.java">
+      <file leaf-file-name="Semaphore.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/Semaphore.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="18" column="31" lean-forward="false" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+            <state relative-caret-position="225">
+              <caret line="627" column="15" lean-forward="false" selection-start-line="627" selection-start-column="15" selection-end-line="627" selection-end-column="15" />
+              <folding>
+                <element signature="e#25191#25192#0" expanded="true" />
+                <element signature="e#25233#25234#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StateMachine.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/StateMachine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RaftCandidateRole.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftCandidateRole.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="30" column="5" lean-forward="true" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -148,41 +177,43 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>RaftStateSerializer</find>
-      <find>handleApp</find>
-      <find>vote</find>
-      <find>LSN</find>
-      <find>LogEntrySeria</find>
-      <find>appendE</find>
-      <find>juint</find>
-      <find>LogEntryS</find>
-      <find>appendEn</find>
-      <find>handleAppend</find>
-      <find>getServerRole</find>
-      <find>tryConvert</find>
-      <find>proposed</find>
-      <find>Cancelling</find>
-      <find>waiting for res</find>
-      <find>aiting for vote responses</find>
-      <find>interrup</find>
-      <find>cancel</find>
-      <find>convertToCan</find>
-      <find>convertToLeader</find>
-      <find>convertToLea</find>
-      <find>requestState</find>
-      <find>electionTimeoutExpired</find>
-      <find>convert</find>
-      <find>stop()</find>
+      <find>timerThreadLog</find>
+      <find>monitor owner</find>
+      <find>raft</find>
+      <find>monitor owner.+</find>
+      <find>pool-</find>
+      <find>pool-5-thread-2</find>
+      <find>grpc</find>
       <find>election</find>
-      <find>stop</find>
-      <find>propose</find>
-      <find>fired</find>
-      <find>proposeConfi</find>
+      <find>ID 0 Election timer fired L</find>
+      <find>maintai</find>
+      <find>ID 0 Still maintai</find>
+      <find>ID 1 Still maintai</find>
+      <find>candidate</find>
+      <find>candidate</find>
+      <find>stepping down</find>
+      <find>timer</find>
+      <find>this.log.</find>
+      <find>,\s*this</find>
+      <find>Stepping</find>
+      <find>leader</find>
+      <find>steppin</find>
+      <find>tryConvertToFollower</find>
+      <find>steppinh</find>
+      <find>setVoted</find>
+      <find>requestState</find>
+      <find>handleAppend</find>
+      <find>request</find>
+      <find>updateCurr</find>
+      <find>getConfi</find>
+      <find>handleAppen</find>
     </findStrings>
     <replaceStrings>
       <replace />
       <replace>RaftPeer</replace>
       <replace>info</replace>
+      <replace>&quot;</replace>
+      <replace>&quot;,</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -196,11 +227,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/InstallSnapshotRequest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/InstallSnapshotResponse.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/snapshot/SnapshotManager.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/RpcTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/SnapshotLogEntry.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftClient.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftEvents.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/AppendEntriesResponse.java" />
@@ -220,33 +246,38 @@
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftStateMachineApplicator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/proto/ProtoSerializerImpl.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftStateTests.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftState.java" />
         <option value="$PROJECT_DIR$/src/main/java/LICENSE" />
-        <option value="$PROJECT_DIR$/src/resources/raft.rpc.proto" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/LogEntryType.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/Log.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/ServerConfiguration.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/PersistentLog.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/target/generated-sources/protobuf/java/com/augustine/raft/proto/RaftRpc.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/LogEntry.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/LogEntrySerializationTests.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/AppTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerInvariantsTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/VoteCounterTests.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftRole.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftCandidateRole.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/CompletableFutures.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/VoteCounter.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftFollower.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftFollowerRole.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftLeaderRole.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/DelegatingRaftMessageHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/NetworkPartitioningMessageHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/ThreadUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftLeaderRole.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerInvariantsTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/LeaderTracker.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/LeaderTrackerTests.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftState.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftCandidateRole.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/StateMachine.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerTests.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java" />
+        <option value="$PROJECT_DIR$/src/resources/raft.rpc.proto" />
+        <option value="$PROJECT_DIR$/src/main/java/com/augustine/raft/ServerConfiguration.java" />
       </list>
     </option>
   </component>
@@ -342,25 +373,6 @@
               <item name="raft" type="b2602c69:ProjectViewProjectNode" />
               <item name="raft" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="raft" type="462c0819:PsiDirectoryNode" />
-              <item name="rpc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="raft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="raft" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="raft" type="462c0819:PsiDirectoryNode" />
-              <item name="rpc" type="462c0819:PsiDirectoryNode" />
-              <item name="impl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="raft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="raft" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -400,7 +412,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/kms" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="SearchEverywhereHistoryKey" value="Raft&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/rpc/RaftRpcClient.java&#10;RaftMes&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftMessageHandler.java&#10;VoteC&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/VoteCounter.java&#10;RaftCan&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftCandidateRole.java&#10;Grpc&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java&#10;RaftLea&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftLeaderRole.java&#10;Vote&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/VoteCounter.java&#10;RaftC&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftCandidateRole.java&#10;test2&#9;PSI&#9;JAVA://com.augustine.raft.AppTest#test2&#10;RaftSer&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftServer.java&#10;RaftCon&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftConfiguration.java&#10;RaftState&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftState.java&#10;Persis&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/wal/PersistentLog.java&#10;R&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftServer.java&#10;handleVo&#9;PSI&#9;JAVA://com.augustine.raft.RaftMessageHandler#handleVoteRequest&#10;verify&#9;FILE&#9;jar:///home/avmathew/.m2/repository/com/google/guava/guava/19.0/guava-19.0.jar!/com/google/common/base/VerifyException.class" />
+    <property name="SearchEverywhereHistoryKey" value="ServerCon&#9;PSI&#9;JAVA://com.augustine.raft.ServerConfiguration&#10;App&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/App.java&#10;raftL&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftLeaderRole.java&#10;Leader&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftLeaderRole.java&#10;RaftSer&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftServer.java&#10;Raft&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/rpc/RaftRpcClient.java&#10;RaftMes&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftMessageHandler.java&#10;VoteC&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/VoteCounter.java&#10;RaftCan&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftCandidateRole.java&#10;Grpc&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java&#10;RaftLea&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftLeaderRole.java&#10;Vote&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/VoteCounter.java&#10;RaftC&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftCandidateRole.java&#10;test2&#9;PSI&#9;JAVA://com.augustine.raft.AppTest#test2&#10;RaftCon&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftConfiguration.java&#10;RaftState&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftState.java&#10;Persis&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/wal/PersistentLog.java&#10;R&#9;FILE&#9;file:///home/avmathew/raft/src/main/java/com/augustine/raft/RaftServer.java&#10;handleVo&#9;PSI&#9;JAVA://com.augustine.raft.RaftMessageHandler#handleVoteRequest&#10;verify&#9;FILE&#9;jar:///home/avmathew/.m2/repository/com/google/guava/guava/19.0/guava-19.0.jar!/com/google/common/base/VerifyException.class" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -452,6 +464,56 @@
       <module name="raft" />
       <envs />
     </configuration>
+    <configuration name="LeaderTrackerTests.testLeaderUpdate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.augustine.raft.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="raft" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.augustine.raft" />
+      <option name="MAIN_CLASS_NAME" value="com.augustine.raft.LeaderTrackerTests" />
+      <option name="METHOD_NAME" value="testLeaderUpdate" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration name="LeaderTrackerTests.testLeaderUpdate1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.augustine.raft.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="raft" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.augustine.raft" />
+      <option name="MAIN_CLASS_NAME" value="com.augustine.raft.LeaderTrackerTests" />
+      <option name="METHOD_NAME" value="testLeaderUpdate1" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
     <configuration name="LogEntrySerializationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -477,7 +539,7 @@
       <envs />
       <patterns />
     </configuration>
-    <configuration name="VoteCounterTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RaftServerTests.testCurrentLeaderUpdate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="com.augustine.raft.*" />
@@ -488,58 +550,8 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="com.augustine.raft" />
-      <option name="MAIN_CLASS_NAME" value="com.augustine.raft.VoteCounterTests" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-    </configuration>
-    <configuration name="VoteCounterTests.testVoteCountingBlocksForTermination" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.augustine.raft.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="raft" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.augustine.raft" />
-      <option name="MAIN_CLASS_NAME" value="com.augustine.raft.VoteCounterTests" />
-      <option name="METHOD_NAME" value="testVoteCountingBlocksForTermination" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-    </configuration>
-    <configuration name="VoteCounterTests.testVoteCountingGrantingVoteForWrongTerm" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.augustine.raft.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="raft" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.augustine.raft" />
-      <option name="MAIN_CLASS_NAME" value="com.augustine.raft.VoteCounterTests" />
-      <option name="METHOD_NAME" value="testVoteCountingGrantingVoteForWrongTerm" />
+      <option name="MAIN_CLASS_NAME" value="com.augustine.raft.RaftServerTests" />
+      <option name="METHOD_NAME" value="testCurrentLeaderUpdate" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -634,19 +646,19 @@
       <listeners />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.VoteCounterTests.testVoteCountingBlocksForTermination" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.VoteCounterTests.testVoteCountingGrantingVoteForWrongTerm" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.VoteCounterTests" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.LogEntrySerializationTests" />
-      <item index="4" class="java.lang.String" itemvalue="Application.App" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.LogEntrySerializationTests" />
+      <item index="1" class="java.lang.String" itemvalue="Application.App" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.LeaderTrackerTests.testLeaderUpdate" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.LeaderTrackerTests.testLeaderUpdate1" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.RaftServerTests.testCurrentLeaderUpdate" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Application.App" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.LogEntrySerializationTests" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.VoteCounterTests" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.VoteCounterTests.testVoteCountingGrantingVoteForWrongTerm" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.VoteCounterTests.testVoteCountingBlocksForTermination" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.RaftServerTests.testCurrentLeaderUpdate" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.LeaderTrackerTests.testLeaderUpdate1" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.LeaderTrackerTests.testLeaderUpdate" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.LogEntrySerializationTests" />
       </list>
     </recent_temporary>
   </component>
@@ -726,47 +738,48 @@
       <workItem from="1550272448127" duration="703000" />
       <workItem from="1550529606819" duration="5719000" />
       <workItem from="1551303572755" duration="2317000" />
-      <workItem from="1551321823517" duration="20798000" />
+      <workItem from="1551321823517" duration="38701000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="LogEntrySerializationTests - 2019.02.28 at 10h 37m 29s.xml">
-      <configuration name="LogEntrySerializationTests" configurationId="JUnit" />
+    <history-entry file="RaftServerTests_testCurrentLeaderUpdate - 2019.03.01 at 13h 03m 34s.xml">
+      <configuration name="RaftServerTests.testCurrentLeaderUpdate" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="VoteCounterTests - 2019.02.28 at 10h 27m 24s.xml">
-      <configuration name="VoteCounterTests" configurationId="JUnit" />
+    <history-entry file="RaftServerTests_testCurrentLeaderUpdate - 2019.03.01 at 13h 04m 00s.xml">
+      <configuration name="RaftServerTests.testCurrentLeaderUpdate" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="VoteCounterTests - 2019.02.28 at 10h 28m 05s.xml">
-      <configuration name="VoteCounterTests" configurationId="JUnit" />
+    <history-entry file="RaftServerTests_testCurrentLeaderUpdate - 2019.03.01 at 13h 31m 46s.xml">
+      <configuration name="RaftServerTests.testCurrentLeaderUpdate" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="VoteCounterTests_testVoteCountingBlocksForTermination - 2019.02.28 at 10h 21m 39s.xml">
-      <configuration name="VoteCounterTests.testVoteCountingBlocksForTermination" configurationId="JUnit" />
+    <history-entry file="RaftServerTests_testCurrentLeaderUpdate - 2019.03.01 at 13h 32m 07s.xml">
+      <configuration name="RaftServerTests.testCurrentLeaderUpdate" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="VoteCounterTests_testVoteCountingEarlyTermination - 2019.02.28 at 10h 19m 39s.xml">
-      <configuration name="VoteCounterTests.testVoteCountingEarlyTermination" configurationId="JUnit" />
+    <history-entry file="RaftServerTests_testCurrentLeaderUpdate - 2019.03.01 at 13h 32m 15s.xml">
+      <configuration name="RaftServerTests.testCurrentLeaderUpdate" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="VoteCounterTests_testVoteCountingEarlyTermination - 2019.02.28 at 10h 19m 56s.xml">
-      <configuration name="VoteCounterTests.testVoteCountingEarlyTermination" configurationId="JUnit" />
+    <history-entry file="RaftServerTests_testCurrentLeaderUpdate - 2019.03.01 at 13h 32m 52s.xml">
+      <configuration name="RaftServerTests.testCurrentLeaderUpdate" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="VoteCounterTests_testVoteCountingEarlyTerminationLoss - 2019.02.28 at 10h 20m 25s.xml">
-      <configuration name="VoteCounterTests.testVoteCountingEarlyTerminationLoss" configurationId="JUnit" />
+    <history-entry file="RaftServerTests_testCurrentLeaderUpdate - 2019.03.01 at 13h 33m 08s.xml">
+      <configuration name="RaftServerTests.testCurrentLeaderUpdate" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="VoteCounterTests_testVoteCountingGrantingVoteForWrongTerm - 2019.02.28 at 10h 24m 37s.xml">
-      <configuration name="VoteCounterTests.testVoteCountingGrantingVoteForWrongTerm" configurationId="JUnit" />
+    <history-entry file="RaftServerTests_testCurrentLeaderUpdate - 2019.03.01 at 13h 33m 15s.xml">
+      <configuration name="RaftServerTests.testCurrentLeaderUpdate" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="VoteCounterTests_testVoteCountingGrantingVoteForWrongTerm - 2019.02.28 at 10h 24m 53s.xml">
-      <configuration name="VoteCounterTests.testVoteCountingGrantingVoteForWrongTerm" configurationId="JUnit" />
+    <history-entry file="RaftServerTests_testCurrentLeaderUpdate - 2019.03.01 at 13h 35m 30s.xml">
+      <configuration name="RaftServerTests.testCurrentLeaderUpdate" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="VoteCounterTests_testVoteCountingGrantingVoteForWrongTerm - 2019.02.28 at 10h 25m 08s.xml">
-      <configuration name="VoteCounterTests.testVoteCountingGrantingVoteForWrongTerm" configurationId="JUnit" />
+    <history-entry file="RaftServerTests_testCurrentLeaderUpdate - 2019.03.01 at 13h 36m 43s.xml">
+      <configuration name="RaftServerTests.testCurrentLeaderUpdate" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="294968000" />
+    <option name="totallyTimeSpent" value="312871000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1613" height="1025" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -780,14 +793,14 @@
       <window_info id="Coding Counter" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4612868" sideWeight="0.6946108" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43729553" sideWeight="0.6946108" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23009814" sideWeight="0.43370402" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35114503" sideWeight="0.6877673" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35114503" sideWeight="0.6877673" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20582765" sideWeight="0.5652174" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -855,6 +868,12 @@
           <properties />
           <option name="timeStamp" value="372" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java</url>
+          <line>541</line>
+          <properties />
+          <option name="timeStamp" value="397" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/com/augustine/raft/SnapshotManagerTests.java</url>
           <line>23</line>
@@ -864,139 +883,17 @@
           <option name="timeStamp" value="210" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="387" />
+      <option name="time" value="398" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="this.raftlog.getLastEntryIndex()" language="JAVA" />
         <watch expression="this.getRaftConfiguration().getLeaderHeartbeatIntervalInMs()" language="JAVA" />
+        <watch expression="Thread.holdsLock(this)" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="37" column="78" lean-forward="false" selection-start-line="37" selection-start-column="78" selection-end-line="37" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resources/raft.rpc.proto">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="18" lean-forward="false" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/LogEntryType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/Log.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="11" column="15" lean-forward="false" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/ServerConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-446">
-          <caret line="36" column="100" lean-forward="false" selection-start-line="36" selection-start-column="100" selection-end-line="36" selection-end-column="100" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/Callable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="64" column="6" lean-forward="false" selection-start-line="64" selection-start-column="6" selection-end-line="64" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="52" column="17" lean-forward="false" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/generated-sources/protobuf/java/com/augustine/raft/proto/RaftRpc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="224" column="32" lean-forward="true" selection-start-line="224" selection-start-column="32" selection-end-line="224" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/lang/Enum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="101" column="21" lean-forward="false" selection-start-line="101" selection-start-column="21" selection-end-line="101" selection-end-column="21" />
-          <folding>
-            <element signature="e#2979#2980#0" expanded="false" />
-            <element signature="e#3009#3010#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/wal/PersistentLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/lang/Thread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="747" column="0" lean-forward="false" selection-start-line="747" selection-start-column="0" selection-end-line="747" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-common/4.1.16.Final/netty-common-4.1.16.Final.jar!/io/netty/util/concurrent/DefaultThreadFactory.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/sun/nio/ch/EPollSelectorImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/sun/nio/ch/SelectorImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/4.1.16.Final/netty-transport-4.1.16.Final.jar!/io/netty/channel/nio/SelectedSelectionKeySetSelector.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/4.1.16.Final/netty-transport-4.1.16.Final.jar!/io/netty/channel/nio/NioEventLoop.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1037,14 +934,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/locks/LockSupport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="215" column="25" lean-forward="false" selection-start-line="215" selection-start-column="25" selection-end-line="215" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/Random.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
@@ -1077,34 +966,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/ThreadPoolExecutor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="1072" column="0" lean-forward="false" selection-start-line="1072" selection-start-column="0" selection-end-line="1072" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/SynchronousQueue.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="146">
           <caret line="361" column="0" lean-forward="false" selection-start-line="361" selection-start-column="0" selection-end-line="361" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/sun/misc/Unsafe.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="362" column="0" lean-forward="true" selection-start-line="362" selection-start-column="0" selection-end-line="362" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/sun/nio/ch/EPollArrayWrapper.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="225" column="23" lean-forward="false" selection-start-line="225" selection-start-column="23" selection-end-line="225" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -1117,14 +982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/AppTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="70" column="29" lean-forward="true" selection-start-line="70" selection-start-column="29" selection-end-line="70" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftStateTests.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -1133,22 +990,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerInvariantsTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/VoteCounterTests.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="161" column="55" lean-forward="false" selection-start-line="161" selection-start-column="55" selection-end-line="161" selection-end-column="55" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1177,73 +1024,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftFollowerRole.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="e#161#162#0" expanded="true" />
-            <element signature="e#190#191#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftRole.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="20" column="28" lean-forward="false" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftLeaderRole.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-189">
-          <caret line="198" column="22" lean-forward="false" selection-start-line="198" selection-start-column="22" selection-end-line="198" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftCandidateRole.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="30" column="29" lean-forward="false" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/RaftRpcClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="18" column="1" lean-forward="true" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/AppendEntriesRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="18" column="31" lean-forward="false" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="29" column="61" lean-forward="true" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
           <folding />
         </state>
       </provider>
@@ -1253,18 +1037,6 @@
         <state relative-caret-position="60">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="195" column="35" lean-forward="false" selection-start-line="195" selection-start-column="35" selection-end-line="195" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#7807#7808#0" expanded="true" />
-            <element signature="e#7840#7841#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1281,8 +1053,8 @@
         <state relative-caret-position="75">
           <caret line="24" column="46" lean-forward="true" selection-start-line="24" selection-start-column="46" selection-end-line="24" selection-end-column="46" />
           <folding>
-            <element signature="e#3009#3010#0" expanded="true" />
-            <element signature="e#3062#3063#0" expanded="true" />
+            <element signature="e#3009#3010#0" expanded="false" />
+            <element signature="e#3062#3063#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1300,11 +1072,287 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/AppendEntriesRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="7" lean-forward="true" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/io/grpc/grpc-core/1.8.0/grpc-core-1.8.0.jar!/io/grpc/internal/SerializingExecutor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/locks/LockSupport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="174" column="0" lean-forward="false" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/locks/AbstractQueuedSynchronizer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="2038" column="0" lean-forward="false" selection-start-line="2038" selection-start-column="0" selection-end-line="2038" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/ScheduledThreadPoolExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="808" column="0" lean-forward="false" selection-start-line="808" selection-start-column="0" selection-end-line="808" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/ThreadPoolExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="623" column="0" lean-forward="false" selection-start-line="623" selection-start-column="0" selection-end-line="623" selection-end-column="0" />
+          <folding>
+            <element signature="e#25341#25342#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/impl/GrpcRaftServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="64" column="60" lean-forward="false" selection-start-line="64" selection-start-column="60" selection-end-line="64" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftMessageHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="14" column="27" lean-forward="true" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/sun/misc/Unsafe.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="353" column="23" lean-forward="false" selection-start-line="353" selection-start-column="23" selection-end-line="353" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/rpc/ThreadUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="34" lean-forward="true" selection-start-line="6" selection-start-column="34" selection-end-line="6" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftRole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="48" column="5" lean-forward="false" selection-start-line="34" selection-start-column="3" selection-end-line="48" selection-end-column="5" />
+          <folding>
+            <element signature="e#902#903#0" expanded="false" />
+            <element signature="e#968#969#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftFollowerRole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/AppTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="63" column="25" lean-forward="false" selection-start-line="63" selection-start-column="25" selection-end-line="63" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/sun/nio/ch/EPollArrayWrapper.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="225" column="23" lean-forward="false" selection-start-line="225" selection-start-column="23" selection-end-line="225" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="300" column="30" lean-forward="false" selection-start-line="300" selection-start-column="30" selection-end-line="300" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/19.0/guava-19.0.jar!/com/google/common/util/concurrent/Uninterruptibles.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="214" column="0" lean-forward="false" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerInvariantsTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="34" column="33" lean-forward="false" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+          <folding>
+            <element signature="e#794#795#0" expanded="true" />
+            <element signature="e#834#835#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/LeaderTrackerTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="35" lean-forward="true" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/LeaderTracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="35" column="5" lean-forward="true" selection-start-line="28" selection-start-column="4" selection-end-line="35" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="140" column="68" lean-forward="true" selection-start-line="140" selection-start-column="68" selection-end-line="140" selection-end-column="68" />
+        <state relative-caret-position="150">
+          <caret line="41" column="26" lean-forward="true" selection-start-line="41" selection-start-column="26" selection-end-line="41" selection-end-column="26" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftCandidateRole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="30" column="5" lean-forward="true" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/Semaphore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="627" column="15" lean-forward="false" selection-start-line="627" selection-start-column="15" selection-end-line="627" selection-end-column="15" />
+          <folding>
+            <element signature="e#25191#25192#0" expanded="true" />
+            <element signature="e#25233#25234#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/concurrent/ConcurrentSkipListSet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="93" column="13" lean-forward="false" selection-start-line="93" selection-start-column="13" selection-end-line="93" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/StateMachine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/augustine/raft/RaftServerTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#675#949#0" expanded="true" />
+            <element signature="e#948#949#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftLeaderRole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resources/raft.rpc.proto">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="12" column="18" lean-forward="false" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/ServerConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="258" column="47" lean-forward="false" selection-start-line="258" selection-start-column="47" selection-end-line="258" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#9824#9825#0" expanded="true" />
+            <element signature="e#9872#9873#0" expanded="true" />
+            <element signature="e#9946#9947#0" expanded="true" />
+            <element signature="e#9997#9998#0" expanded="true" />
+            <element signature="e#10127#10128#0" expanded="true" />
+            <element signature="e#10206#10207#0" expanded="true" />
+            <element signature="e#10262#10263#0" expanded="true" />
+            <element signature="e#10333#10334#0" expanded="true" />
+            <element signature="e#10694#10695#0" expanded="true" />
+            <element signature="e#10727#10728#0" expanded="true" />
+            <element signature="e#21946#21947#0" expanded="true" />
+            <element signature="e#21973#21974#0" expanded="true" />
+            <element signature="e#22903#22904#0" expanded="true" />
+            <element signature="e#22965#22966#0" expanded="true" />
+            <element signature="e#22998#22999#0" expanded="true" />
+            <element signature="e#23041#23042#0" expanded="true" />
+            <element signature="e#24850#24851#0" expanded="true" />
+            <element signature="e#24917#24918#0" expanded="true" />
+            <element signature="e#24974#24975#0" expanded="true" />
+            <element signature="e#25040#25041#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/augustine/raft/RaftState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="149" column="28" lean-forward="false" selection-start-line="149" selection-start-column="28" selection-end-line="149" selection-end-column="28" />
+          <folding>
+            <element signature="e#6012#6013#0" expanded="true" />
+            <element signature="e#6062#6063#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
