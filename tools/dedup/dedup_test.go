@@ -187,6 +187,138 @@ func TestRun_ExistingHardlinksNotRehashed(t *testing.T) {
 	}
 }
 
+// A symlink that points at its own parent directory. Without cycle
+// detection, walkFollow would recurse forever.
+func TestRun_FollowSymlinks_SelfCycle(t *testing.T) {
+	root := t.TempDir()
+	payload := randBytes(t, 1024)
+	writeFile(t, filepath.Join(root, "a.bin"), payload)
+	writeFile(t, filepath.Join(root, "b.bin"), payload)
+	// loop -> . creates A/loop/loop/loop/... if followed naively.
+	if err := os.Symlink(".", filepath.Join(root, "loop")); err != nil {
+		t.Fatal(err)
+	}
+
+	cfg := newTestConfig(t, root)
+	cfg.FollowSymlinks = true
+
+	done := make(chan struct{})
+	var rep *Report
+	var err error
+	go func() {
+		defer close(done)
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		rep, err = Run(ctx, cfg)
+	}()
+	select {
+	case <-done:
+	case <-time.After(15 * time.Second):
+		t.Fatal("Run hung — symlink cycle not detected")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(rep.Groups) != 1 {
+		t.Fatalf("want 1 group, got %d", len(rep.Groups))
+	}
+	// Files must not be emitted twice via the loop alias.
+	if rep.FilesScanned != 2 {
+		t.Errorf("files_scanned=%d, want 2 (cycle caused re-emission)", rep.FilesScanned)
+	}
+}
+
+// Two directories each holding a symlink to the other. The visited set
+// must break the ring regardless of which side we enter first.
+func TestRun_FollowSymlinks_MutualCycle(t *testing.T) {
+	root := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(root, "a"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.MkdirAll(filepath.Join(root, "b"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	payload := randBytes(t, 2048)
+	writeFile(t, filepath.Join(root, "a", "f1"), payload)
+	writeFile(t, filepath.Join(root, "b", "f2"), payload)
+	// a/toB -> ../b, b/toA -> ../a forms a ring.
+	if err := os.Symlink("../b", filepath.Join(root, "a", "toB")); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink("../a", filepath.Join(root, "b", "toA")); err != nil {
+		t.Fatal(err)
+	}
+
+	cfg := newTestConfig(t, root)
+	cfg.FollowSymlinks = true
+
+	done := make(chan struct{})
+	var rep *Report
+	var err error
+	go func() {
+		defer close(done)
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		rep, err = Run(ctx, cfg)
+	}()
+	select {
+	case <-done:
+	case <-time.After(15 * time.Second):
+		t.Fatal("Run hung — mutual symlink cycle not detected")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Two distinct files (different content is fine; what we care about is
+	// that neither was emitted twice via the symlinks).
+	if rep.FilesScanned != 2 {
+		t.Errorf("files_scanned=%d, want 2", rep.FilesScanned)
+	}
+	if len(rep.Groups) != 1 {
+		t.Errorf("want 1 dup group, got %d", len(rep.Groups))
+	}
+}
+
+// A broken symlink must not abort the walk.
+func TestRun_FollowSymlinks_BrokenLink(t *testing.T) {
+	root := t.TempDir()
+	payload := randBytes(t, 512)
+	writeFile(t, filepath.Join(root, "real.bin"), payload)
+	if err := os.Symlink("/nonexistent/nope", filepath.Join(root, "broken")); err != nil {
+		t.Fatal(err)
+	}
+	cfg := newTestConfig(t, root)
+	cfg.FollowSymlinks = true
+	rep, err := Run(context.Background(), cfg)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if rep.FilesScanned != 1 {
+		t.Errorf("files_scanned=%d, want 1", rep.FilesScanned)
+	}
+}
+
+// Symlink to a regular file must emit the file and inode-dedup against
+// the real path so we don't claim a file duplicates itself.
+func TestRun_FollowSymlinks_FileAliasIsNotDuplicate(t *testing.T) {
+	root := t.TempDir()
+	payload := randBytes(t, 4096)
+	real := filepath.Join(root, "real.bin")
+	writeFile(t, real, payload)
+	if err := os.Symlink("real.bin", filepath.Join(root, "alias.bin")); err != nil {
+		t.Fatal(err)
+	}
+	cfg := newTestConfig(t, root)
+	cfg.FollowSymlinks = true
+	rep, err := Run(context.Background(), cfg)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(rep.Groups) != 0 {
+		t.Fatalf("symlink alias must not look like a duplicate; got %d groups", len(rep.Groups))
+	}
+}
+
 func TestRun_SymlinkSkippedByDefault(t *testing.T) {
 	root := t.TempDir()
 	payload := randBytes(t, 4096)
